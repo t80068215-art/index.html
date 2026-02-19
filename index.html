@@ -191,10 +191,7 @@
               </svg>
             </button>
 
-            <div
-              id="nav-links"
-              class="hidden md:flex gap-1 overflow-x-auto"
-            >
+            <div id="nav-links" class="hidden md:flex gap-1 overflow-x-auto">
               <button
                 class="nav-link active px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
                 data-section="home"
@@ -237,14 +234,17 @@
               >
                 المسرح
               </button>
+
+              <!-- ✅ FIXED: Library link (PC) -->
               <a
-                href="https://taryaamlibrary.netlify.app"
+                href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap flex items-center gap-1"
               >
                 مكتبة تريم <span>↗</span>
               </a>
+
               <button
                 class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
                 data-section="quiz"
@@ -299,14 +299,17 @@
               >
                 المسرح الشعري
               </button>
+
+              <!-- ✅ FIXED: Library link (Mobile) -->
               <a
-                href="https://taryamall.my.canva.site/"
+                href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right flex items-center justify-end gap-1"
               >
                 مكتبة تريم <span>↗</span>
               </a>
+
               <button
                 class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
                 data-section="quiz"
@@ -336,9 +339,7 @@
                 />
               </svg>
             </div>
-            <h2
-              class="text-4xl md:text-5xl font-amiri text-burgundy mb-4"
-            >
+            <h2 class="text-4xl md:text-5xl font-amiri text-burgundy mb-4">
               مرحباً بك في موسوعة الشعر العربي
             </h2>
             <p
@@ -631,7 +632,9 @@
       <!-- Footer -->
       <footer class="bg-ink text-parchment py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
-          <p class="font-amiri text-xl text-gold mb-2">موسوعة الشعر العربي التفاعلية</p>
+          <p class="font-amiri text-xl text-gold mb-2">
+            موسوعة الشعر العربي التفاعلية
+          </p>
           <p class="text-parchment/70 text-sm">
             تعلم تاريخ الشعر العربي بطريقة تفاعلية وممتعة
           </p>
@@ -650,7 +653,10 @@
             class="sticky top-0 bg-gradient-to-l from-burgundy to-ink p-4 flex justify-between items-center"
           >
             <h3 id="modal-title" class="text-xl font-amiri text-gold"></h3>
-            <button onclick="closeModal()" class="text-parchment hover:text-gold text-2xl">
+            <button
+              onclick="closeModal()"
+              class="text-parchment hover:text-gold text-2xl"
+            >
               ×
             </button>
           </div>
@@ -892,7 +898,12 @@
           icon: "🏛️",
           description:
             "أول مدرسة في الشعر العربي الحديث، سعت إلى إحياء التراث الشعري العربي القديم والعودة إلى ينابيعه الأصيلة",
-          characteristics: ["محاكاة الشعر العباسي", "الاهتمام بالديباجة اللفظية", "معالجة القضايا الوطنية والاجتماعية", "المحافظة على وحدة البيت"],
+          characteristics: [
+            "محاكاة الشعر العباسي",
+            "الاهتمام بالديباجة اللفظية",
+            "معالجة القضايا الوطنية والاجتماعية",
+            "المحافظة على وحدة البيت",
+          ],
           poets: ["محمود سامي البارودي", "أحمد شوقي", "حافظ إبراهيم", "أحمد محرم"],
         },
         {
@@ -903,7 +914,12 @@
           icon: "📖",
           description:
             "مدرسة تجديدية ثارت على التقليد، تأثرت بالأدب الإنجليزي، ركزت على التعبير عن الذات",
-          characteristics: ["الثورة على التقليد", "التعبير عن الذات والتجربة الشخصية", "التأثر بالرومانسية الإنجليزية", "الوحدة العضوية للقصيدة"],
+          characteristics: [
+            "الثورة على التقليد",
+            "التعبير عن الذات والتجربة الشخصية",
+            "التأثر بالرومانسية الإنجليزية",
+            "الوحدة العضوية للقصيدة",
+          ],
           poets: ["عباس محمود العقاد", "إبراهيم المازني", "عبد الرحمن شكري"],
         },
         {
@@ -914,7 +930,12 @@
           icon: "🌙",
           description:
             "مدرسة رومانسية حالمة، أسسها أحمد زكي أبو شادي، اهتمت بالجمال والطبيعة والحب",
-          characteristics: ["الحنين والشوق", "التغني بالطبيعة", "الميل إلى الحزن والألم", "استخدام الرموز"],
+          characteristics: [
+            "الحنين والشوق",
+            "التغني بالطبيعة",
+            "الميل إلى الحزن والألم",
+            "استخدام الرموز",
+          ],
           poets: ["أحمد زكي أبو شادي", "إبراهيم ناجي", "علي محمود طه", "أبو القاسم الشابي"],
         },
         {
@@ -925,7 +946,12 @@
           icon: "🕊️",
           description:
             "ثورة حقيقية في الشكل الشعري، كسرت نظام الشطرين وأسست لشعر التفعيلة",
-          characteristics: ["التحرر من القافية الموحدة", "استخدام التفعيلة بدل البحر الكامل", "الوحدة العضوية", "استخدام الأسطورة والرمز"],
+          characteristics: [
+            "التحرر من القافية الموحدة",
+            "استخدام التفعيلة بدل البحر الكامل",
+            "الوحدة العضوية",
+            "استخدام الأسطورة والرمز",
+          ],
           poets: ["نازك الملائكة", "بدر شاكر السياب", "صلاح عبد الصبور", "محمود درويش"],
         },
       ];
