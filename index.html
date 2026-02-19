@@ -1,1487 +1,1766 @@
+<!-- /index.html -->
 <!doctype html>
 <html lang="ar" dir="rtl" class="h-full">
- <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>موسوعة الشعر العربي التفاعلية</title>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&amp;family=Tajawal:wght@400;500;700&amp;display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            amiri: ['Amiri', 'serif'],
-            tajawal: ['Tajawal', 'sans-serif']
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>موسوعة الشعر العربي التفاعلية</title>
+
+    <!-- Tailwind CDN (GitHub Pages friendly) -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // IMPORTANT: Tailwind CDN won't "see" classes generated via template strings (bg-${...}).
+      // We safelist the needed classes so GitHub Pages render matches local.
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              amiri: ["Amiri", "serif"],
+              tajawal: ["Tajawal", "sans-serif"],
+            },
+            colors: {
+              parchment: "#f5e6d3",
+              darkParchment: "#e8d4bc",
+              ink: "#2c1810",
+              gold: "#b8860b",
+              burgundy: "#722f37",
+              olive: "#556b2f",
+            },
           },
-          colors: {
-            parchment: '#f5e6d3',
-            darkParchment: '#e8d4bc',
-            ink: '#2c1810',
-            gold: '#b8860b',
-            burgundy: '#722f37',
-            olive: '#556b2f'
-          }
+        },
+        safelist: [
+          // base colors
+          "bg-burgundy",
+          "bg-gold",
+          "bg-olive",
+          "text-burgundy",
+          "text-gold",
+          "text-olive",
+          "border-burgundy",
+          "border-gold",
+          "border-olive",
+
+          // opacity variants used in templates
+          "bg-burgundy/5",
+          "bg-burgundy/10",
+          "bg-burgundy/20",
+          "bg-gold/5",
+          "bg-gold/10",
+          "bg-gold/20",
+          "bg-olive/5",
+          "bg-olive/10",
+          "bg-olive/20",
+
+          "text-burgundy/80",
+          "text-gold/80",
+          "text-olive/80",
+
+          // gradients referencing those colors
+          "from-burgundy",
+          "to-burgundy",
+          "via-burgundy",
+          "from-gold",
+          "to-gold",
+          "via-gold",
+          "from-olive",
+          "to-olive",
+          "via-olive",
+
+          // borders in templates
+          "border-r-4",
+        ],
+      };
+    </script>
+
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
-    }
-  </script>
-  <style>
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-30px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    .animate-fadeIn { animation: fadeIn 0.5s ease-out forwards; }
-    .animate-slideIn { animation: slideIn 0.4s ease-out forwards; }
-    .section-hidden { display: none; }
-    .section-visible { display: block; animation: fadeIn 0.5s ease-out; }
-    .timeline-line {
-      position: absolute;
-      right: 50%;
-      top: 0;
-      bottom: 0;
-      width: 4px;
-      background: linear-gradient(to bottom, #b8860b, #722f37, #556b2f);
-      transform: translateX(50%);
-    }
-    @media (max-width: 768px) {
-      .timeline-line { right: 20px; transform: none; }
-    }
-    .bubble-animation {
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-    .poet-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(44, 24, 16, 0.2);
-    }
-    .nav-link.active {
-      background: linear-gradient(135deg, #b8860b, #722f37);
-      color: white;
-    }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #f5e6d3; }
-    ::-webkit-scrollbar-thumb { background: #b8860b; border-radius: 4px; }
-  </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full bg-parchment font-tajawal text-ink overflow-auto">
-  <div id="app-wrapper" class="w-full h-full overflow-auto"><!-- Navigation -->
-   <nav class="sticky top-0 z-50 bg-gradient-to-l from-burgundy via-ink to-burgundy shadow-lg">
-    <div class="max-w-7xl mx-auto px-4">
-     <div class="flex items-center justify-between h-16">
-      <h1 id="site-title" class="text-xl md:text-2xl font-amiri text-gold font-bold">موسوعة الشعر العربي</h1><button id="mobile-menu-btn" class="md:hidden text-parchment p-2">
-       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-       </svg></button>
-      <div id="nav-links" class="hidden md:flex gap-1 overflow-x-auto"><button class="nav-link active px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="home">الرئيسية</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="eras">العصور</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="poets">الشعراء</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="schools">المدارس</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="grammar">القواعد</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="analyzer">المحلل</button> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="theater">المسرح</button> <a href="https://taryamall.my.canva.site/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap flex items-center gap-1">مكتبة تريم <span>↗</span></a> <button class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap" data-section="quiz">الاختبار</button>
-      </div>
-     </div><!-- Mobile Menu -->
-     <div id="mobile-nav" class="hidden md:hidden pb-4">
-      <div class="flex flex-col gap-2"><button class="nav-link-mobile active px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="home">الرئيسية</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="eras">العصور الشعرية</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="poets">أعلام الشعراء</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="schools">المدارس الشعرية</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="grammar">القواعد النحوية</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="analyzer">محلل الأبيات</button> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="theater">المسرح الشعري</button> <a href="https://taryamall.my.canva.site/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right flex items-center justify-end gap-1">مكتبة تريم <span>↗</span></a> <button class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right" data-section="quiz">اختبار المعلومات</button>
-      </div>
-     </div>
-    </div>
-   </nav><!-- Main Content -->
-   <main class="max-w-7xl mx-auto px-4 py-8"><!-- Home Section -->
-    <section id="home" class="section-visible">
-     <div class="text-center mb-12 animate-fadeIn">
-      <div class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-6 shadow-lg">
-       <svg class="w-20 h-20 text-gold" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-       </svg>
-      </div>
-      <h2 class="text-4xl md:text-5xl font-amiri text-burgundy mb-4">مرحباً بك في موسوعة الشعر العربي</h2>
-      <p id="welcome-text" class="text-xl text-ink/80 max-w-2xl mx-auto mb-8">رحلة تفاعلية عبر تاريخ الشعر العربي من العصر الجاهلي إلى العصر الحديث</p>
-      <div class="flex flex-wrap justify-center gap-4"><button onclick="showSection('eras')" class="px-6 py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all hover:scale-105"> استكشف العصور </button> <button onclick="showSection('quiz')" class="px-6 py-3 border-2 border-gold text-gold rounded-xl font-bold hover:bg-gold hover:text-parchment transition-all"> اختبر معلوماتك </button>
-      </div>
-     </div><!-- Quick Stats -->
-     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-      <div class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all">
-       <div class="text-3xl font-bold text-burgundy mb-2">
-        6
-       </div>
-       <div class="text-ink/70">
-        عصور شعرية
-       </div>
-      </div>
-      <div class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all">
-       <div class="text-3xl font-bold text-gold mb-2">
-        12
-       </div>
-       <div class="text-ink/70">
-        شاعر مشهور
-       </div>
-      </div>
-      <div class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all">
-       <div class="text-3xl font-bold text-olive mb-2">
-        4
-       </div>
-       <div class="text-ink/70">
-        مدارس أدبية
-       </div>
-      </div>
-      <div class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all">
-       <div class="text-3xl font-bold text-burgundy mb-2">
-        10
-       </div>
-       <div class="text-ink/70">
-        أسئلة اختبار
-       </div>
-      </div>
-     </div><!-- Featured Verse -->
-     <div class="bg-gradient-to-l from-burgundy/10 via-gold/10 to-olive/10 rounded-2xl p-8 text-center border border-gold/30">
-      <p class="text-2xl md:text-3xl font-amiri text-ink leading-relaxed mb-4">قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ <br>
-        بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ</p>
-      <p class="text-gold font-bold">— امرؤ القيس</p>
-     </div>
-    </section><!-- Eras Section -->
-    <section id="eras" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12">العصور الشعرية</h2>
-     <div class="relative">
-      <div class="timeline-line hidden md:block"></div>
-      <div id="timeline-container" class="space-y-8"></div>
-     </div>
-    </section><!-- Poets Section -->
-    <section id="poets" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12">أعلام الشعراء</h2>
-     <div id="poets-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-    </section><!-- Schools Section -->
-    <section id="schools" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12">المدارس الشعرية الحديثة</h2>
-     <div id="schools-container" class="grid md:grid-cols-2 gap-8"></div>
-    </section><!-- Grammar Section -->
-    <section id="grammar" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12">القواعد النحوية والعروضية</h2>
-     <div id="grammar-container" class="space-y-8"></div>
-    </section><!-- Analyzer Section -->
-    <section id="analyzer" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8">محلل الأبيات الشعرية</h2>
-     <p class="text-center text-ink/70 mb-8">اختر بيتاً شعرياً للحصول على تحليل تفصيلي</p>
-     <div class="max-w-4xl mx-auto"><select id="verse-select" class="w-full p-4 rounded-xl border-2 border-gold bg-white/80 font-amiri text-lg mb-8 cursor-pointer"> <option value="">-- اختر بيتاً شعرياً --</option> </select>
-      <div id="analysis-result" class="hidden"></div>
-     </div>
-    </section><!-- Theater Section -->
-    <section id="theater" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8">المسرح الشعري التفاعلي</h2>
-     <p class="text-center text-ink/70 mb-8">اختر شاعرين وموضوعاً لمشاهدة حوار شعري بينهما</p>
-     <div class="max-w-4xl mx-auto">
-      <div class="grid md:grid-cols-3 gap-4 mb-8">
-       <div><label class="block text-ink font-bold mb-2">الشاعر الأول</label> <select id="poet1-select" class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"> <option value="">اختر شاعراً</option> </select>
-       </div>
-       <div><label class="block text-ink font-bold mb-2">الشاعر الثاني</label> <select id="poet2-select" class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"> <option value="">اختر شاعراً</option> </select>
-       </div>
-       <div><label class="block text-ink font-bold mb-2">الموضوع</label> <select id="topic-select" class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"> <option value="">اختر موضوعاً</option> <option value="love">الحب والغزل</option> <option value="wisdom">الحكمة</option> <option value="nature">الطبيعة</option> </select>
-       </div>
-      </div><button id="start-theater" class="w-full py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all mb-8"> ابدأ الحوار الشعري </button>
-      <div id="theater-stage" class="hidden bg-gradient-to-b from-ink/5 to-ink/10 rounded-2xl p-6 min-h-[400px]">
-       <div id="dialog-container" class="space-y-4"></div>
-       <div class="text-center mt-6"><button id="next-verse-btn" class="px-6 py-3 bg-gold text-ink rounded-xl font-bold hover:bg-burgundy hover:text-parchment transition-all hidden"> البيت التالي ← </button>
-       </div>
-      </div>
-     </div>
-    </section><!-- Quiz Section -->
-    <section id="quiz" class="section-hidden">
-     <h2 class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8">اختبار المعلومات</h2>
-     <div id="quiz-intro" class="max-w-2xl mx-auto text-center">
-      <div class="bg-white/50 rounded-2xl p-8 shadow-lg">
-       <svg class="w-16 h-16 mx-auto text-gold mb-4" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-       </svg>
-       <h3 class="text-2xl font-bold text-ink mb-4">هل أنت مستعد؟</h3>
-       <p class="text-ink/70 mb-6">اختبار من 10 أسئلة حول تاريخ الشعر العربي وأعلامه</p><button id="start-quiz" class="px-8 py-4 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold text-lg hover:shadow-lg transition-all hover:scale-105"> ابدأ الاختبار </button>
-      </div>
-     </div>
-     <div id="quiz-container" class="hidden max-w-2xl mx-auto"><!-- Progress Bar -->
-      <div class="mb-8">
-       <div class="flex justify-between text-sm text-ink/70 mb-2"><span>السؤال <span id="current-q">1</span> من 10</span> <span>النقاط: <span id="score">0</span></span>
-       </div>
-       <div class="h-3 bg-darkParchment rounded-full overflow-hidden">
-        <div id="progress-bar" class="h-full bg-gradient-to-l from-gold to-burgundy transition-all duration-500" style="width: 10%"></div>
-       </div>
-      </div><!-- Question Card -->
-      <div id="question-card" class="bg-white/70 rounded-2xl p-8 shadow-lg">
-       <h3 id="question-text" class="text-xl font-bold text-ink mb-6"></h3>
-       <div id="options-container" class="space-y-3"></div>
-      </div><!-- Navigation -->
-      <div class="flex justify-between mt-6"><button id="prev-q" class="px-6 py-3 border-2 border-gold text-gold rounded-xl font-bold hover:bg-gold hover:text-parchment transition-all disabled:opacity-50 disabled:cursor-not-allowed"> ← السابق </button> <button id="next-q" class="px-6 py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all disabled:opacity-50"> التالي → </button>
-      </div>
-     </div>
-     <div id="quiz-result" class="hidden max-w-2xl mx-auto text-center">
-      <div class="bg-white/70 rounded-2xl p-8 shadow-lg">
-       <div id="result-icon" class="text-6xl mb-4">
-        🏆
-       </div>
-       <h3 id="result-title" class="text-3xl font-bold text-ink mb-4"></h3>
-       <p id="result-score" class="text-xl text-ink/70 mb-6"></p>
-       <div id="result-message" class="text-ink/80 mb-8"></div><button id="retry-quiz" class="px-8 py-4 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all"> أعد الاختبار </button>
-      </div>
-     </div>
-    </section>
-   </main><!-- Footer -->
-   <footer class="bg-ink text-parchment py-8 mt-12">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-     <p class="font-amiri text-xl text-gold mb-2">موسوعة الشعر العربي التفاعلية</p>
-     <p class="text-parchment/70 text-sm">تعلم تاريخ الشعر العربي بطريقة تفاعلية وممتعة</p>
-    </div>
-   </footer><!-- Modal -->
-   <div id="modal" class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-    <div class="bg-parchment rounded-2xl max-w-2xl w-full max-h-[90%] overflow-y-auto shadow-2xl animate-fadeIn">
-     <div class="sticky top-0 bg-gradient-to-l from-burgundy to-ink p-4 flex justify-between items-center">
-      <h3 id="modal-title" class="text-xl font-amiri text-gold"></h3><button onclick="closeModal()" class="text-parchment hover:text-gold text-2xl">×</button>
-     </div>
-     <div id="modal-content" class="p-6"></div>
-    </div>
-   </div>
-  </div>
-  <script>
-    // ==================== DATA ====================
-    
-    const erasData = [
-      {
-        id: 'jahili',
-        name: 'العصر الجاهلي',
-        period: 'قبل 610م',
-        color: 'burgundy',
-        description: 'عصر ما قبل الإسلام، تميز بالشعر الفطري والمعلقات السبع',
-        poets: ['امرؤ القيس', 'طرفة بن العبد', 'زهير بن أبي سلمى', 'لبيد بن ربيعة'],
-        verse: 'قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ *** بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ',
-        characteristics: ['الفخر والحماسة', 'وصف الطبيعة', 'الغزل العفيف', 'الحكمة']
-      },
-      {
-        id: 'islamic',
-        name: 'صدر الإسلام',
-        period: '610م - 661م',
-        color: 'gold',
-        description: 'فترة البعثة النبوية والخلفاء الراشدين، تأثر الشعر بالقيم الإسلامية',
-        poets: ['حسان بن ثابت', 'كعب بن زهير', 'الخنساء'],
-        verse: 'بانَت سُعادُ فَقَلبي اليَومَ مَتبولُ *** مُتَيَّمٌ إِثرَها لَم يُفدَ مَكبولُ',
-        characteristics: ['المدح النبوي', 'الدفاع عن الإسلام', 'الرثاء', 'الزهد']
-      },
-      {
-        id: 'umayyad',
-        name: 'العصر الأموي',
-        period: '661م - 750م',
-        color: 'olive',
-        description: 'ازدهار الشعر السياسي والغزلي في ظل الدولة الأموية',
-        poets: ['جرير', 'الفرزدق', 'الأخطل', 'عمر بن أبي ربيعة'],
-        verse: 'أَقولُ لَها وَقَد طارَت شَعاعاً *** مِنَ الأَبطالِ وَيحَكِ لَن تُراعي',
-        characteristics: ['الشعر السياسي', 'النقائض', 'الغزل الحضري', 'المدح']
-      },
-      {
-        id: 'abbasid',
-        name: 'العصر العباسي',
-        period: '750م - 1258م',
-        color: 'burgundy',
-        description: 'العصر الذهبي للشعر العربي، ظهور التجديد والمدارس الشعرية',
-        poets: ['المتنبي', 'أبو تمام', 'البحتري', 'أبو نواس', 'أبو العلاء المعري'],
-        verse: 'عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ *** وَتَأتي عَلى قَدرِ الكِرامِ المَكارِمُ',
-        characteristics: ['التجديد في الأساليب', 'الفلسفة والحكمة', 'البديع والصنعة', 'الخمريات']
-      },
-      {
-        id: 'andalusian',
-        name: 'العصر الأندلسي',
-        period: '711م - 1492م',
-        color: 'gold',
-        description: 'شعر الأندلس المتميز بوصف الطبيعة والموشحات',
-        poets: ['ابن زيدون', 'ولادة بنت المستكفي', 'ابن خفاجة', 'لسان الدين بن الخطيب'],
-        verse: 'أَضحى التَنائي بَديلاً مِن تَدانينا *** وَنابَ عَن طيبِ لُقيانا تَجافينا',
-        characteristics: ['الموشحات', 'وصف الطبيعة', 'الغزل الرقيق', 'الحنين للوطن']
-      },
-      {
-        id: 'modern',
-        name: 'العصر الحديث',
-        period: '1800م - الآن',
-        color: 'olive',
-        description: 'عصر النهضة والتجديد، ظهور المدارس الشعرية الحديثة',
-        poets: ['أحمد شوقي', 'حافظ إبراهيم', 'نزار قباني', 'محمود درويش'],
-        verse: 'قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا *** كادَ المُعَلِّمُ أَن يَكونَ رَسولا',
-        characteristics: ['الشعر الوطني', 'التجديد في الشكل', 'القضايا الاجتماعية', 'الشعر الحر']
-      }
-    ];
-
-    const poetsData = [
-      {
-        id: 'imru',
-        name: 'امرؤ القيس',
-        fullName: 'امرؤ القيس بن حجر الكندي',
-        era: 'العصر الجاهلي',
-        birth: '501م',
-        death: '544م',
-        image: '👑',
-        bio: 'يُلقب بـ"الملك الضليل" و"ذو القروح"، وهو من أشهر شعراء العرب وصاحب إحدى المعلقات السبع',
-        works: ['المعلقة', 'ديوان امرئ القيس'],
-        verses: [
-          'قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ',
-          'وَلَيلٍ كَمَوجِ البَحرِ أَرخى سُدولَهُ',
-          'مِكَرٍّ مِفَرٍّ مُقبِلٍ مُدبِرٍ مَعاً'
-        ],
-        characteristics: ['إجادة التشبيه', 'وصف الخيل', 'الغزل الحسي', 'الوقوف على الأطلال']
-      },
-      {
-        id: 'mutanabbi',
-        name: 'المتنبي',
-        fullName: 'أحمد بن الحسين الجعفي الكندي',
-        era: 'العصر العباسي',
-        birth: '915م',
-        death: '965م',
-        image: '🏆',
-        bio: 'أعظم شعراء العربية، لُقب بالمتنبي لادعائه النبوة في شبابه. اشتهر بحكمته وفخره',
-        works: ['ديوان المتنبي', 'قصائد سيف الدولة'],
-        verses: [
-          'عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ',
-          'أَنا الَّذي نَظَرَ الأَعمى إِلى أَدَبي',
-          'الخَيلُ وَاللَيلُ وَالبَيداءُ تَعرِفُني'
-        ],
-        characteristics: ['الحكمة العميقة', 'الفخر والاعتزاز', 'المدح القوي', 'الهجاء اللاذع']
-      },
-      {
-        id: 'shawqi',
-        name: 'أحمد شوقي',
-        fullName: 'أحمد شوقي بن علي بن أحمد شوقي',
-        era: 'العصر الحديث',
-        birth: '1868م',
-        death: '1932م',
-        image: '🌟',
-        bio: 'أمير الشعراء، رائد مدرسة الإحياء، ومؤسس المسرح الشعري العربي',
-        works: ['الشوقيات', 'مجنون ليلى', 'مصرع كليوباترا'],
-        verses: [
-          'قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا',
-          'وَطَني لَو شُغِلتُ بِالخُلدِ عَنهُ',
-          'سَلامٌ مِن صَبا بَرَدى أَرَقُّ'
-        ],
-        characteristics: ['المسرح الشعري', 'الشعر الوطني', 'إحياء التراث', 'الرثاء']
-      },
-      {
-        id: 'nizar',
-        name: 'نزار قباني',
-        fullName: 'نزار توفيق قباني',
-        era: 'العصر الحديث',
-        birth: '1923م',
-        death: '1998م',
-        image: '🌹',
-        bio: 'شاعر الحب والمرأة، من أكثر الشعراء العرب شعبية في العصر الحديث',
-        works: ['قالت لي السمراء', 'طفولة نهد', 'بلقيس'],
-        verses: [
-          'أحبكِ جداً وأعرف أن الطريق إلى المستحيل طويل',
-          'كلماتي أصبحت خرزاً من الملونات',
-          'علمني حبك أن أحزن'
-        ],
-        characteristics: ['شعر الحب', 'لغة بسيطة عميقة', 'الجرأة في الطرح', 'الشعر السياسي']
-      },
-      {
-        id: 'darwish',
-        name: 'محمود درويش',
-        fullName: 'محمود سليم حسين درويش',
-        era: 'العصر الحديث',
-        birth: '1941م',
-        death: '2008م',
-        image: '🕊️',
-        bio: 'شاعر المقاومة الفلسطينية، من أهم الشعراء العرب المعاصرين',
-        works: ['أوراق الزيتون', 'عاشق من فلسطين', 'جدارية'],
-        verses: [
-          'سجّل أنا عربي',
-          'على هذه الأرض ما يستحق الحياة',
-          'أحنُّ إلى خبز أمي'
-        ],
-        characteristics: ['شعر المقاومة', 'الرمزية', 'التجديد في الشعر الحر', 'الوطنية']
-      },
-      {
-        id: 'hassan',
-        name: 'حسان بن ثابت',
-        fullName: 'حسان بن ثابت الأنصاري',
-        era: 'صدر الإسلام',
-        birth: '563م',
-        death: '674م',
-        image: '📜',
-        bio: 'شاعر الرسول ﷺ، دافع عن الإسلام بشعره وهجا المشركين',
-        works: ['ديوان حسان بن ثابت'],
-        verses: [
-          'وَأَحسَنُ مِنكَ لَم تَرَ قَطُّ عَيني',
-          'أَتَهجوهُ وَلَستَ لَهُ بِكُفءٍ',
-          'هَجَوتَ مُحَمَّداً فَأَجَبتُ عَنهُ'
-        ],
-        characteristics: ['الدفاع عن الإسلام', 'المدح النبوي', 'الهجاء', 'الفخر']
-      },
-      {
-        id: 'ibn_zaydun',
-        name: 'ابن زيدون',
-        fullName: 'أحمد بن عبد الله بن زيدون المخزومي',
-        era: 'العصر الأندلسي',
-        birth: '1003م',
-        death: '1071م',
-        image: '🌙',
-        bio: 'شاعر الأندلس الأكبر، اشتهر بحبه لولادة بنت المستكفي وقصائده الرقيقة',
-        works: ['الرسالة الجدية', 'الرسالة الهزلية', 'ديوان ابن زيدون'],
-        verses: [
-          'أَضحى التَنائي بَديلاً مِن تَدانينا',
-          'إِنّي ذَكَرتُكِ بِالزَهراءِ مُشتاقاً',
-          'أَمّا الهَوى فَلَم أَقطَعهُ بِالعِتابِ'
-        ],
-        characteristics: ['الغزل الرقيق', 'الحنين', 'السهولة والعذوبة', 'التأثر بالطبيعة']
-      },
-      {
-        id: 'abu_nawas',
-        name: 'أبو نواس',
-        fullName: 'الحسن بن هانئ الحكمي',
-        era: 'العصر العباسي',
-        birth: '756م',
-        death: '814م',
-        image: '🍷',
-        bio: 'شاعر الخمريات الأشهر، جدد في الشعر العربي وثار على التقاليد القديمة',
-        works: ['ديوان أبي نواس'],
-        verses: [
-          'دَع عَنكَ لَومي فَإِنَّ اللَومَ إِغراءُ',
-          'أَلا فَاِسقِني خَمراً وَقُل لي هِيَ الخَمرُ',
-          'يا قَمَراً أَبصَرتُهُ يَطلُعُ'
-        ],
-        characteristics: ['الخمريات', 'التجديد', 'الهجاء', 'الغزل بالمذكر']
-      },
-      {
-        id: 'zuhayr',
-        name: 'زهير بن أبي سلمى',
-        fullName: 'زهير بن أبي سلمى ربيعة بن رياح المزني',
-        era: 'العصر الجاهلي',
-        birth: '520م',
-        death: '609م',
-        image: '⚖️',
-        bio: 'حكيم الشعراء، اشتهر بحولياته التي كان ينقحها سنة كاملة قبل إخراجها',
-        works: ['المعلقة', 'ديوان زهير'],
-        verses: [
-          'سَئِمتُ تَكاليفَ الحَياةِ وَمَن يَعِش',
-          'وَمَن لَم يُصانِع في أُمورٍ كَثيرَةٍ',
-          'وَمَن يَجعَلِ المَعروفَ مِن دونِ عِرضِهِ'
-        ],
-        characteristics: ['الحكمة', 'المدح', 'الإتقان الفني', 'نبذ الحرب']
-      },
-      {
-        id: 'khansa',
-        name: 'الخنساء',
-        fullName: 'تماضر بنت عمرو بن الحارث السلمية',
-        era: 'صدر الإسلام',
-        birth: '575م',
-        death: '664م',
-        image: '💔',
-        bio: 'أشهر شاعرات العرب في الرثاء، اشتهرت برثاء أخويها صخر ومعاوية',
-        works: ['ديوان الخنساء'],
-        verses: [
-          'قَذىً بِعَينِكَ أَم بِالعَينِ عُوّارُ',
-          'وَإِنَّ صَخراً لَتَأتَمُّ الهُداةُ بِهِ',
-          'يا عَينِ جودي بِدَمعٍ مِنكِ مِدرارِ'
-        ],
-        characteristics: ['الرثاء', 'صدق العاطفة', 'التكرار المؤثر', 'التصوير الحي']
-      },
-      {
-        id: 'jarir',
-        name: 'جرير',
-        fullName: 'جرير بن عطية بن حذيفة الخطفي اليربوعي',
-        era: 'العصر الأموي',
-        birth: '653م',
-        death: '733م',
-        image: '⚔️',
-        bio: 'فحل من فحول الشعر الأموي، اشتهر بنقائضه مع الفرزدق والأخطل',
-        works: ['ديوان جرير', 'النقائض'],
-        verses: [
-          'إِنَّ العُيونَ الَّتي في طَرفِها حَوَرٌ',
-          'أَتَصحو أَم فُؤادُكَ غَيرُ صاحِ',
-          'لَولا مُساعَدَةُ الحَياءِ لَمَنطِقي'
-        ],
-        characteristics: ['النقائض', 'الهجاء', 'الغزل', 'المدح']
-      },
-      {
-        id: 'maarri',
-        name: 'أبو العلاء المعري',
-        fullName: 'أحمد بن عبد الله بن سليمان التنوخي المعري',
-        era: 'العصر العباسي',
-        birth: '973م',
-        death: '1057م',
-        image: '🔮',
-        bio: 'الفيلسوف الشاعر الضرير، اشتهر بفلسفته التشاؤمية وعزلته عن الناس',
-        works: ['لزوم ما لا يلزم', 'سقط الزند', 'رسالة الغفران'],
-        verses: [
-          'تَعَبُ كُلُّها الحَياةُ فَما أَعجَبُ',
-          'غَيرُ مُجدٍ في مِلَّتي واعتِقادي',
-          'هَذا جَناهُ أَبي عَلَيَّ وَما جَنَيتُ عَلى أَحَدِ'
-        ],
-        characteristics: ['الفلسفة', 'التشاؤم', 'الزهد', 'اللزوميات']
-      }
-    ];
-
-    const schoolsData = [
-      {
-        id: 'ihya',
-        name: 'مدرسة الإحياء والبعث',
-        period: 'أواخر القرن 19',
-        color: 'burgundy',
-        icon: '🏛️',
-        description: 'أول مدرسة في الشعر العربي الحديث، سعت إلى إحياء التراث الشعري العربي القديم والعودة إلى ينابيعه الأصيلة',
-        characteristics: [
-          'محاكاة الشعر العباسي',
-          'الاهتمام بالديباجة اللفظية',
-          'معالجة القضايا الوطنية والاجتماعية',
-          'المحافظة على وحدة البيت'
-        ],
-        poets: ['محمود سامي البارودي', 'أحمد شوقي', 'حافظ إبراهيم', 'أحمد محرم']
-      },
-      {
-        id: 'diwan',
-        name: 'مدرسة الديوان',
-        period: 'أوائل القرن 20',
-        color: 'gold',
-        icon: '📖',
-        description: 'مدرسة تجديدية ثارت على التقليد، تأثرت بالأدب الإنجليزي، ركزت على التعبير عن الذات',
-        characteristics: [
-          'الثورة على التقليد',
-          'التعبير عن الذات والتجربة الشخصية',
-          'التأثر بالرومانسية الإنجليزية',
-          'الوحدة العضوية للقصيدة'
-        ],
-        poets: ['عباس محمود العقاد', 'إبراهيم المازني', 'عبد الرحمن شكري']
-      },
-      {
-        id: 'apollo',
-        name: 'مدرسة أبولو',
-        period: '1932م',
-        color: 'olive',
-        icon: '🌙',
-        description: 'مدرسة رومانسية حالمة، أسسها أحمد زكي أبو شادي، اهتمت بالجمال والطبيعة والحب',
-        characteristics: [
-          'الحنين والشوق',
-          'التغني بالطبيعة',
-          'الميل إلى الحزن والألم',
-          'استخدام الرموز'
-        ],
-        poets: ['أحمد زكي أبو شادي', 'إبراهيم ناجي', 'علي محمود طه', 'أبو القاسم الشابي']
-      },
-      {
-        id: 'free',
-        name: 'مدرسة الشعر الحر',
-        period: '1947م',
-        color: 'burgundy',
-        icon: '🕊️',
-        description: 'ثورة حقيقية في الشكل الشعري، كسرت نظام الشطرين وأسست لشعر التفعيلة',
-        characteristics: [
-          'التحرر من القافية الموحدة',
-          'استخدام التفعيلة بدل البحر الكامل',
-          'الوحدة العضوية',
-          'استخدام الأسطورة والرمز'
-        ],
-        poets: ['نازك الملائكة', 'بدر شاكر السياب', 'صلاح عبد الصبور', 'محمود درويش']
-      }
-    ];
-
-    const grammarData = [
-      {
-        title: 'أقسام الكلام',
-        icon: '📝',
-        content: [
-          { term: 'الاسم', definition: 'ما دل على معنى في نفسه غير مقترن بزمن (محمد، كتاب، جميل)' },
-          { term: 'الفعل', definition: 'ما دل على حدث مقترن بزمن (كتبَ، يكتبُ، اكتُبْ)' },
-          { term: 'الحرف', definition: 'ما دل على معنى في غيره (من، إلى، في، على)' }
-        ]
-      },
-      {
-        title: 'علامات الإعراب',
-        icon: '⚙️',
-        content: [
-          { term: 'الرفع', definition: 'الضمة (يكتبُ المعلمُ)' },
-          { term: 'النصب', definition: 'الفتحة (رأيتُ المعلمَ)' },
-          { term: 'الجر', definition: 'الكسرة (مررتُ بالمعلمِ)' },
-          { term: 'الجزم', definition: 'السكون (لم يكتبْ)' }
-        ]
-      },
-      {
-        title: 'أنواع الجملة',
-        icon: '📋',
-        content: [
-          { term: 'الجملة الاسمية', definition: 'تبدأ باسم، تتكون من مبتدأ وخبر (الشمسُ ساطعةٌ)' },
-          { term: 'الجملة الفعلية', definition: 'تبدأ بفعل، تتكون من فعل وفاعل (طلعت الشمسُ)' }
-        ]
-      },
-      {
-        title: 'البحور الشعرية',
-        icon: '🎵',
-        content: [
-          { term: 'الطويل', definition: 'فعولن مفاعيلن فعولن مفاعيلن (أشهر البحور)' },
-          { term: 'البسيط', definition: 'مستفعلن فاعلن مستفعلن فاعلن' },
-          { term: 'الكامل', definition: 'متفاعلن متفاعلن متفاعلن' },
-          { term: 'الوافر', definition: 'مفاعلتن مفاعلتن فعولن' },
-          { term: 'الخفيف', definition: 'فاعلاتن مستفعلن فاعلاتن' },
-          { term: 'الرمل', definition: 'فاعلاتن فاعلاتن فاعلاتن' }
-        ]
-      },
-      {
-        title: 'المنصوبات',
-        icon: '📌',
-        content: [
-          { term: 'المفعول به', definition: 'من وقع عليه الفعل (قرأتُ الكتابَ)' },
-          { term: 'المفعول المطلق', definition: 'مصدر يؤكد الفعل (قرأتُ قراءةً)' },
-          { term: 'المفعول لأجله', definition: 'يبين سبب الفعل (قمتُ إجلالاً)' },
-          { term: 'الحال', definition: 'يبين هيئة صاحبه (جاء الطفلُ ضاحكاً)' },
-          { term: 'التمييز', definition: 'يوضح المبهم (اشتريتُ رطلاً تمراً)' }
-        ]
-      },
-      {
-        title: 'المجرورات',
-        icon: '🔗',
-        content: [
-          { term: 'المجرور بحرف الجر', definition: 'ذهبتُ إلى المدرسةِ' },
-          { term: 'المجرور بالإضافة', definition: 'كتابُ الطالبِ' }
-        ]
-      }
-    ];
-
-    const versesAnalysis = [
-      {
-        id: 'v1',
-        verse: 'قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ',
-        poet: 'امرؤ القيس',
-        era: 'العصر الجاهلي',
-        words: [
-          { word: 'قفا', meaning: 'فعل أمر للمثنى من وقف', root: 'و ق ف', irab: 'فعل أمر مبني على حذف النون' },
-          { word: 'نبكِ', meaning: 'نذرف الدموع', root: 'ب ك ي', irab: 'فعل مضارع مجزوم في جواب الطلب' },
-          { word: 'ذكرى', meaning: 'التذكر والاستحضار', root: 'ذ ك ر', irab: 'اسم مجرور بمن' },
-          { word: 'حبيب', meaning: 'المحبوبة', root: 'ح ب ب', irab: 'مضاف إليه مجرور' },
-          { word: 'منزل', meaning: 'مكان الإقامة', root: 'ن ز ل', irab: 'معطوف مجرور' }
-        ],
-        literary: 'يبدأ الشاعر معلقته بطلب الوقوف والبكاء على ذكرى الحبيبة ومنزلها، وهو تقليد جاهلي يسمى "الوقوف على الأطلال"',
-        context: 'هذا البيت هو مطلع أشهر قصيدة في الشعر العربي "معلقة امرئ القيس"، وقد كان العرب يبدؤون قصائدهم بالوقوف على الديار المهجورة'
-      },
-      {
-        id: 'v2',
-        verse: 'عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ',
-        poet: 'المتنبي',
-        era: 'العصر العباسي',
-        words: [
-          { word: 'على', meaning: 'حرف جر يفيد التناسب', root: '-', irab: 'حرف جر' },
-          { word: 'قدر', meaning: 'المقدار والحجم', root: 'ق د ر', irab: 'اسم مجرور' },
-          { word: 'أهل', meaning: 'أصحاب', root: 'أ ه ل', irab: 'مضاف إليه مجرور' },
-          { word: 'العزم', meaning: 'الإرادة القوية', root: 'ع ز م', irab: 'مضاف إليه مجرور' },
-          { word: 'العزائم', meaning: 'الأمور العظيمة', root: 'ع ز م', irab: 'فاعل مرفوع' }
-        ],
-        literary: 'يربط المتنبي بين همة الإنسان وبين ما يناله من عظائم الأمور، فكلما علت الهمة عظمت الإنجازات',
-        context: 'قالها المتنبي في مدح سيف الدولة الحمداني، وهي من أشهر أبيات الحكمة في الشعر العربي'
-      },
-      {
-        id: 'v3',
-        verse: 'قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا',
-        poet: 'أحمد شوقي',
-        era: 'العصر الحديث',
-        words: [
-          { word: 'قم', meaning: 'انهض واعتدل', root: 'ق و م', irab: 'فعل أمر مبني على السكون' },
-          { word: 'للمعلم', meaning: 'لأجل المعلم', root: 'ع ل م', irab: 'جار ومجرور' },
-          { word: 'وفّه', meaning: 'أعطه حقه كاملاً', root: 'و ف ي', irab: 'فعل أمر والهاء مفعول به أول' },
-          { word: 'التبجيلا', meaning: 'التعظيم والاحترام', root: 'ب ج ل', irab: 'مفعول به ثانٍ منصوب' }
-        ],
-        literary: 'يدعو شوقي إلى تقدير المعلم واحترامه لدوره العظيم في بناء الأجيال',
-        context: 'من قصيدة شوقي الشهيرة في المعلم، كتبها تقديراً لدور التعليم في نهضة الأمم'
-      },
-      {
-        id: 'v4',
-        verse: 'سَجِّل أَنا عَرَبِيّ',
-        poet: 'محمود درويش',
-        era: 'العصر الحديث',
-        words: [
-          { word: 'سجّل', meaning: 'اكتب ودوّن', root: 'س ج ل', irab: 'فعل أمر مبني على السكون' },
-          { word: 'أنا', meaning: 'ضمير المتكلم', root: '-', irab: 'ضمير منفصل مبتدأ' },
-          { word: 'عربي', meaning: 'من العرب', root: 'ع ر ب', irab: 'خبر مرفوع' }
-        ],
-        literary: 'تعبير عن الهوية والانتماء في مواجهة محاولات الطمس، يؤكد الشاعر هويته بكل فخر واعتزاز',
-        context: 'من قصيدة "بطاقة هوية" التي كتبها درويش عام 1964، أصبحت رمزاً للمقاومة الفلسطينية'
-      },
-      {
-        id: 'v5',
-        verse: 'أَضحى التَنائي بَديلاً مِن تَدانينا',
-        poet: 'ابن زيدون',
-        era: 'العصر الأندلسي',
-        words: [
-          { word: 'أضحى', meaning: 'صار وأصبح', root: 'ض ح و', irab: 'فعل ماضٍ ناقص' },
-          { word: 'التنائي', meaning: 'البعد والفراق', root: 'ن أ ي', irab: 'اسم أضحى مرفوع' },
-          { word: 'بديلاً', meaning: 'عوضاً', root: 'ب د ل', irab: 'خبر أضحى منصوب' },
-          { word: 'تدانينا', meaning: 'قربنا من بعض', root: 'د ن و', irab: 'اسم مجرور والنا ضمير مضاف إليه' }
-        ],
-        literary: 'يصف ابن زيدون تحول العلاقة مع ولادة من القرب إلى البعد، معبراً عن حزنه العميق',
-        context: 'من قصيدة النونية الشهيرة التي كتبها ابن زيدون في حبه لولادة بنت المستكفي بعد فراقهما'
-      }
-    ];
-
-    const theaterDialogs = {
-      love: {
-        'imru-nizar': [
-          { speaker: 'imru', text: 'قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ *** بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ' },
-          { speaker: 'nizar', text: 'أحبكِ جداً... وأعرف أن الطريق إلى المستحيل طويل' },
-          { speaker: 'imru', text: 'وَلَيلٍ كَمَوجِ البَحرِ أَرخى سُدولَهُ *** عَلَيَّ بِأَنواعِ الهُمومِ لِيَبتَلي' },
-          { speaker: 'nizar', text: 'علّمني حبك أن أحزن... وأنا محتاج منذ عصور لامرأة تجعلني أحزن' }
-        ],
-        'mutanabbi-shawqi': [
-          { speaker: 'mutanabbi', text: 'أُحِبُّكِ يا كُلَّ المَحاسِنِ جُملَةً *** وَإِن كانَ بَعضُ الحُسنِ يُغريني بِبَعضِ' },
-          { speaker: 'shawqi', text: 'وَما كُنتُ أَدري قَبلَ عَزَّةَ ما البُكا *** وَلا مُوجِعاتِ القَلبِ حَتّى تَوَلَّت' },
-          { speaker: 'mutanabbi', text: 'أَزورُهُمُ وَسَوادُ اللَيلِ يَشفَعُ لي *** وَأَنثَني وَبَياضُ الصُبحِ يُغري بي' },
-          { speaker: 'shawqi', text: 'يا جارَةَ الوادي طَرِبتُ وَعادَني *** ما يَشبَهُ الأَحلامَ مِن ذِكراكِ' }
-        ]
-      },
-      wisdom: {
-        'mutanabbi-maarri': [
-          { speaker: 'mutanabbi', text: 'عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ *** وَتَأتي عَلى قَدرِ الكِرامِ المَكارِمُ' },
-          { speaker: 'maarri', text: 'تَعَبُ كُلُّها الحَياةُ فَما أَعـ *** ـجَبُ إِلاّ مِن راغِبٍ في ازدِيادِ' },
-          { speaker: 'mutanabbi', text: 'وَمَن يَكُ ذا فَمٍ مُرٍّ مَريضٍ *** يَجِد مُرّاً بِهِ الماءَ الزُلالا' },
-          { speaker: 'maarri', text: 'غَيرُ مُجدٍ في مِلَّتي واعتِقادي *** نَوحُ باكٍ وَلا تَرَنُّمُ شادِ' }
-        ],
-        'zuhayr-shawqi': [
-          { speaker: 'zuhayr', text: 'سَئِمتُ تَكاليفَ الحَياةِ وَمَن يَعِش *** ثَمانينَ حَولاً لا أَبا لَكَ يَسأَمِ' },
-          { speaker: 'shawqi', text: 'وَما نَيلُ المَطالِبِ بِالتَمَنّي *** وَلَكِن تُؤخَذُ الدُنيا غِلابا' },
-          { speaker: 'zuhayr', text: 'وَمَن لَم يُصانِع في أُمورٍ كَثيرَةٍ *** يُضَرَّس بِأَنيابٍ وَيوطَأ بِمَنسِمِ' },
-          { speaker: 'shawqi', text: 'قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا *** كادَ المُعَلِّمُ أَن يَكونَ رَسولا' }
-        ]
-      },
-      nature: {
-        'ibn_zaydun-darwish': [
-          { speaker: 'ibn_zaydun', text: 'إِنّي ذَكَرتُكِ بِالزَهراءِ مُشتاقاً *** وَالأُفقُ طَلقٌ وَمَرأى الأَرضِ قَد راقا' },
-          { speaker: 'darwish', text: 'على هذه الأرض ما يستحق الحياة... تردد أبريل، رائحة الخبز في الفجر' },
-          { speaker: 'ibn_zaydun', text: 'نَهرٌ كَأَنَّ الرِياحَ الدُهرَ تَنسِجُهُ *** دِرعاً لِحُسنِ فَرادى غَيرَ أَزواجِ' },
-          { speaker: 'darwish', text: 'أحنّ إلى خبز أمي... وقهوة أمي... ولمسة أمي' }
-        ],
-        'abu_nawas-nizar': [
-          { speaker: 'abu_nawas', text: 'أَلا فَاِسقِني خَمراً وَقُل لي هِيَ الخَمرُ *** وَلا تَسقِني سِرّاً إِذا أَمكَنَ الجَهرُ' },
-          { speaker: 'nizar', text: 'كلماتي أصبحت خرزاً من الملونات... وعليّ أن أختار' },
-          { speaker: 'abu_nawas', text: 'دَع عَنكَ لَومي فَإِنَّ اللَومَ إِغراءُ *** وَداوِني بِالَّتي كانَت هِيَ الداءُ' },
-          { speaker: 'nizar', text: 'ماذا أقول له؟ ماذا أقول لمن يبيع وردته للمزارع؟' }
-        ]
-      }
-    };
-
-    const quizQuestions = [
-      {
-        question: 'من هو صاحب المعلقة التي تبدأ بـ "قفا نبكِ"؟',
-        options: ['طرفة بن العبد', 'امرؤ القيس', 'زهير بن أبي سلمى', 'لبيد بن ربيعة'],
-        correct: 1
-      },
-      {
-        question: 'أي عصر يُعرف بظهور الموشحات؟',
-        options: ['العصر العباسي', 'العصر الأموي', 'العصر الأندلسي', 'العصر الجاهلي'],
-        correct: 2
-      },
-      {
-        question: 'من مؤسس مدرسة الإحياء والبعث؟',
-        options: ['أحمد شوقي', 'محمود سامي البارودي', 'حافظ إبراهيم', 'العقاد'],
-        correct: 1
-      },
-      {
-        question: 'ما هو لقب المتنبي؟',
-        options: ['أمير الشعراء', 'شاعر العربية الأكبر', 'الملك الضليل', 'شاعر الفلاسفة'],
-        correct: 1
-      },
-      {
-        question: 'من شاعر الرسول ﷺ؟',
-        options: ['كعب بن زهير', 'حسان بن ثابت', 'لبيد بن ربيعة', 'عمرو بن كلثوم'],
-        correct: 1
-      },
-      {
-        question: 'أي مدرسة شعرية أسسها أحمد زكي أبو شادي؟',
-        options: ['مدرسة الديوان', 'مدرسة أبولو', 'مدرسة الإحياء', 'مدرسة الشعر الحر'],
-        correct: 1
-      },
-      {
-        question: 'ما هو بحر معلقة امرئ القيس؟',
-        options: ['الكامل', 'البسيط', 'الطويل', 'الوافر'],
-        correct: 2
-      },
-      {
-        question: 'من صاحب قصيدة "بطاقة هوية"؟',
-        options: ['نزار قباني', 'محمود درويش', 'صلاح عبد الصبور', 'بدر شاكر السياب'],
-        correct: 1
-      },
-      {
-        question: 'ما هي أشهر خصائص الشعر الجاهلي؟',
-        options: ['الرمزية والأسطورة', 'الوقوف على الأطلال', 'الشعر المسرحي', 'الشعر الحر'],
-        correct: 1
-      },
-      {
-        question: 'من رائدة شعر التفعيلة في العراق؟',
-        options: ['فدوى طوقان', 'نازك الملائكة', 'الخنساء', 'ولادة بنت المستكفي'],
-        correct: 1
-      }
-    ];
-
-    // ==================== STATE ====================
-    
-    let currentSection = 'home';
-    let quizState = {
-      currentQuestion: 0,
-      score: 0,
-      answers: [],
-      selectedAnswer: null
-    };
-    let theaterState = {
-      currentVerse: 0,
-      dialog: [],
-      poet1: null,
-      poet2: null
-    };
-
-    // ==================== DEFAULT CONFIG ====================
-    
-    const defaultConfig = {
-      site_title: 'موسوعة الشعر العربي',
-      welcome_text: 'رحلة تفاعلية عبر تاريخ الشعر العربي من العصر الجاهلي إلى العصر الحديث',
-      background_color: '#f5e6d3',
-      surface_color: '#ffffff',
-      text_color: '#2c1810',
-      primary_action_color: '#b8860b',
-      secondary_action_color: '#722f37',
-      font_family: 'Tajawal',
-      font_size: 16
-    };
-
-    // ==================== NAVIGATION ====================
-    
-    function showSection(sectionId) {
-      document.querySelectorAll('main > section').forEach(section => {
-        section.classList.remove('section-visible');
-        section.classList.add('section-hidden');
-      });
-      
-      const target = document.getElementById(sectionId);
-      if (target) {
-        target.classList.remove('section-hidden');
-        target.classList.add('section-visible');
-      }
-      
-      document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(link => {
-        link.classList.remove('active');
-        if (link.dataset.section === sectionId) {
-          link.classList.add('active');
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
         }
-      });
-      
-      document.getElementById('mobile-nav').classList.add('hidden');
-      currentSection = sectionId;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
 
-    // ==================== RENDER FUNCTIONS ====================
-    
-    function renderTimeline() {
-      const container = document.getElementById('timeline-container');
-      container.innerHTML = erasData.map((era, index) => `
-        <div class="relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} animate-slideIn" style="animation-delay: ${index * 0.1}s">
-          <div class="hidden md:block w-1/2"></div>
-          <div class="absolute right-1/2 transform translate-x-1/2 md:translate-x-0 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-${era.color} border-4 border-parchment shadow-lg z-10">
-            <span class="text-parchment text-xl">📜</span>
+      .animate-fadeIn {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      .animate-slideIn {
+        animation: slideIn 0.4s ease-out forwards;
+      }
+      .section-hidden {
+        display: none;
+      }
+      .section-visible {
+        display: block;
+        animation: fadeIn 0.5s ease-out;
+      }
+
+      .timeline-line {
+        position: absolute;
+        right: 50%;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: linear-gradient(to bottom, #b8860b, #722f37, #556b2f);
+        transform: translateX(50%);
+      }
+      @media (max-width: 768px) {
+        .timeline-line {
+          right: 20px;
+          transform: none;
+        }
+      }
+
+      .bubble-animation {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      .poet-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(44, 24, 16, 0.2);
+      }
+      .nav-link.active {
+        background: linear-gradient(135deg, #b8860b, #722f37);
+        color: white;
+      }
+
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f5e6d3;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #b8860b;
+        border-radius: 4px;
+      }
+
+      body {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body class="h-full bg-parchment font-tajawal text-ink overflow-auto">
+    <div id="app-wrapper" class="w-full h-full overflow-auto">
+      <!-- Navigation -->
+      <nav
+        class="sticky top-0 z-50 bg-gradient-to-l from-burgundy via-ink to-burgundy shadow-lg"
+      >
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="flex items-center justify-between h-16">
+            <h1
+              id="site-title"
+              class="text-xl md:text-2xl font-amiri text-gold font-bold"
+            >
+              موسوعة الشعر العربي
+            </h1>
+
+            <button id="mobile-menu-btn" class="md:hidden text-parchment p-2">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+
+            <div
+              id="nav-links"
+              class="hidden md:flex gap-1 overflow-x-auto"
+            >
+              <button
+                class="nav-link active px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="home"
+              >
+                الرئيسية
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="eras"
+              >
+                العصور
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="poets"
+              >
+                الشعراء
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="schools"
+              >
+                المدارس
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="grammar"
+              >
+                القواعد
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="analyzer"
+              >
+                المحلل
+              </button>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="theater"
+              >
+                المسرح
+              </button>
+              <a
+                href="https://taryamall.my.canva.site/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap flex items-center gap-1"
+              >
+                مكتبة تريم <span>↗</span>
+              </a>
+              <button
+                class="nav-link px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all whitespace-nowrap"
+                data-section="quiz"
+              >
+                الاختبار
+              </button>
+            </div>
           </div>
-          <div class="w-full md:w-1/2 pr-8 md:pr-16 md:pl-8">
-            <div class="bg-white/80 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border-r-4 border-${era.color} cursor-pointer group" onclick="showEraModal('${era.id}')">
-              <div class="flex items-center gap-3 mb-3">
-                <span class="px-3 py-1 bg-${era.color}/20 text-${era.color} rounded-full text-sm font-bold">${era.period}</span>
-              </div>
-              <h3 class="text-xl font-bold text-ink mb-2 group-hover:text-${era.color} transition-colors">${era.name}</h3>
-              <p class="text-ink/70 mb-4">${era.description}</p>
-              <div class="font-amiri text-lg text-ink/80 italic border-r-2 border-${era.color} pr-4">
-                "${era.verse.split('***')[0]}"
-              </div>
-              <div class="mt-4 flex flex-wrap gap-2">
-                ${era.poets.slice(0, 3).map(poet => `
-                  <span class="text-xs bg-darkParchment px-2 py-1 rounded">${poet}</span>
-                `).join('')}
-              </div>
+
+          <!-- Mobile Menu -->
+          <div id="mobile-nav" class="hidden md:hidden pb-4">
+            <div class="flex flex-col gap-2">
+              <button
+                class="nav-link-mobile active px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="home"
+              >
+                الرئيسية
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="eras"
+              >
+                العصور الشعرية
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="poets"
+              >
+                أعلام الشعراء
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="schools"
+              >
+                المدارس الشعرية
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="grammar"
+              >
+                القواعد النحوية
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="analyzer"
+              >
+                محلل الأبيات
+              </button>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="theater"
+              >
+                المسرح الشعري
+              </button>
+              <a
+                href="https://taryamall.my.canva.site/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right flex items-center justify-end gap-1"
+              >
+                مكتبة تريم <span>↗</span>
+              </a>
+              <button
+                class="nav-link-mobile px-3 py-2 rounded-lg text-sm text-parchment hover:bg-gold/30 transition-all text-right"
+                data-section="quiz"
+              >
+                اختبار المعلومات
+              </button>
             </div>
           </div>
         </div>
-      `).join('');
-    }
+      </nav>
 
-    function renderPoets() {
-      const container = document.getElementById('poets-grid');
-      container.innerHTML = poetsData.map((poet, index) => `
-        <div class="poet-card bg-white/80 rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 animate-fadeIn" 
-             style="animation-delay: ${index * 0.05}s"
-             onclick="showPoetModal('${poet.id}')">
-          <div class="text-center mb-4">
-            <div class="text-5xl mb-3">${poet.image}</div>
-            <h3 class="text-xl font-bold text-ink">${poet.name}</h3>
-            <span class="text-sm text-gold">${poet.era}</span>
-          </div>
-          <p class="text-ink/70 text-sm text-center line-clamp-3">${poet.bio}</p>
-          <div class="mt-4 text-center">
-            <span class="text-burgundy text-sm hover:underline">اقرأ المزيد ←</span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderSchools() {
-      const container = document.getElementById('schools-container');
-      container.innerHTML = schoolsData.map((school, index) => `
-        <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn" style="animation-delay: ${index * 0.1}s">
-          <div class="bg-gradient-to-l from-${school.color} to-ink p-4">
-            <div class="flex items-center gap-3">
-              <span class="text-3xl">${school.icon}</span>
-              <div>
-                <h3 class="text-xl font-bold text-parchment">${school.name}</h3>
-                <span class="text-gold text-sm">${school.period}</span>
-              </div>
+      <!-- Main Content -->
+      <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Home Section -->
+        <section id="home" class="section-visible">
+          <div class="text-center mb-12 animate-fadeIn">
+            <div
+              class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-6 shadow-lg"
+            >
+              <svg
+                class="w-20 h-20 text-gold"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                />
+              </svg>
             </div>
-          </div>
-          <div class="p-6">
-            <p class="text-ink/80 mb-4">${school.description}</p>
-            <h4 class="font-bold text-ink mb-2">الخصائص:</h4>
-            <ul class="space-y-2 mb-4">
-              ${school.characteristics.map(char => `
-                <li class="flex items-start gap-2">
-                  <span class="text-${school.color}">◆</span>
-                  <span class="text-ink/70">${char}</span>
-                </li>
-              `).join('')}
-            </ul>
-            <h4 class="font-bold text-ink mb-2">أبرز الشعراء:</h4>
-            <div class="flex flex-wrap gap-2">
-              ${school.poets.map(poet => `
-                <span class="px-3 py-1 bg-${school.color}/10 text-${school.color} rounded-full text-sm">${poet}</span>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderGrammar() {
-      const container = document.getElementById('grammar-container');
-      container.innerHTML = grammarData.map((section, index) => `
-        <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn" style="animation-delay: ${index * 0.1}s">
-          <div class="bg-gradient-to-l from-gold to-burgundy p-4 flex items-center gap-3">
-            <span class="text-2xl">${section.icon}</span>
-            <h3 class="text-xl font-bold text-parchment">${section.title}</h3>
-          </div>
-          <div class="p-6">
-            <div class="space-y-4">
-              ${section.content.map(item => `
-                <div class="border-r-4 border-gold pr-4 py-2">
-                  <h4 class="font-bold text-burgundy">${item.term}</h4>
-                  <p class="text-ink/70">${item.definition}</p>
-                </div>
-              `).join('')}
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderAnalyzerOptions() {
-      const select = document.getElementById('verse-select');
-      select.innerHTML = '<option value="">-- اختر بيتاً شعرياً --</option>' +
-        versesAnalysis.map(v => `<option value="${v.id}">${v.verse} — ${v.poet}</option>`).join('');
-    }
-
-    function renderTheaterOptions() {
-      const poets = poetsData.filter(p => 
-        ['imru', 'mutanabbi', 'shawqi', 'nizar', 'darwish', 'maarri', 'zuhayr', 'ibn_zaydun', 'abu_nawas'].includes(p.id)
-      );
-      
-      const options = '<option value="">اختر شاعراً</option>' +
-        poets.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-      
-      document.getElementById('poet1-select').innerHTML = options;
-      document.getElementById('poet2-select').innerHTML = options;
-    }
-
-    // ==================== MODAL FUNCTIONS ====================
-    
-    function showModal(title, content) {
-      document.getElementById('modal-title').textContent = title;
-      document.getElementById('modal-content').innerHTML = content;
-      document.getElementById('modal').classList.remove('hidden');
-      document.getElementById('modal').classList.add('flex');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').classList.add('hidden');
-      document.getElementById('modal').classList.remove('flex');
-      document.body.style.overflow = '';
-    }
-
-    function showEraModal(eraId) {
-      const era = erasData.find(e => e.id === eraId);
-      if (!era) return;
-      
-      const content = `
-        <div class="space-y-4">
-          <div class="flex items-center gap-3 mb-4">
-            <span class="px-4 py-2 bg-${era.color}/20 text-${era.color} rounded-full font-bold">${era.period}</span>
-          </div>
-          <p class="text-ink/80 text-lg">${era.description}</p>
-          
-          <div class="bg-${era.color}/5 rounded-xl p-4 my-4">
-            <p class="font-amiri text-xl text-center text-ink leading-relaxed">
-              ${era.verse.replace('***', '<br>')}
+            <h2
+              class="text-4xl md:text-5xl font-amiri text-burgundy mb-4"
+            >
+              مرحباً بك في موسوعة الشعر العربي
+            </h2>
+            <p
+              id="welcome-text"
+              class="text-xl text-ink/80 max-w-2xl mx-auto mb-8"
+            >
+              رحلة تفاعلية عبر تاريخ الشعر العربي من العصر الجاهلي إلى العصر الحديث
             </p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <button
+                onclick="showSection('eras')"
+                class="px-6 py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all hover:scale-105"
+              >
+                استكشف العصور
+              </button>
+              <button
+                onclick="showSection('quiz')"
+                class="px-6 py-3 border-2 border-gold text-gold rounded-xl font-bold hover:bg-gold hover:text-parchment transition-all"
+              >
+                اختبر معلوماتك
+              </button>
+            </div>
           </div>
-          
-          <h4 class="font-bold text-ink text-lg">أشهر الشعراء:</h4>
-          <div class="flex flex-wrap gap-2">
-            ${era.poets.map(poet => `
-              <span class="px-3 py-2 bg-darkParchment rounded-lg">${poet}</span>
-            `).join('')}
+
+          <!-- Quick Stats -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div
+              class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all"
+            >
+              <div class="text-3xl font-bold text-burgundy mb-2">6</div>
+              <div class="text-ink/70">عصور شعرية</div>
+            </div>
+            <div
+              class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all"
+            >
+              <div class="text-3xl font-bold text-gold mb-2">12</div>
+              <div class="text-ink/70">شاعر مشهور</div>
+            </div>
+            <div
+              class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all"
+            >
+              <div class="text-3xl font-bold text-olive mb-2">4</div>
+              <div class="text-ink/70">مدارس أدبية</div>
+            </div>
+            <div
+              class="bg-white/50 backdrop-blur rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all"
+            >
+              <div class="text-3xl font-bold text-burgundy mb-2">10</div>
+              <div class="text-ink/70">أسئلة اختبار</div>
+            </div>
           </div>
-          
-          <h4 class="font-bold text-ink text-lg mt-4">خصائص الشعر:</h4>
+
+          <!-- Featured Verse -->
+          <div
+            class="bg-gradient-to-l from-burgundy/10 via-gold/10 to-olive/10 rounded-2xl p-8 text-center border border-gold/30"
+          >
+            <p
+              class="text-2xl md:text-3xl font-amiri text-ink leading-relaxed mb-4"
+            >
+              قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ <br />
+              بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ
+            </p>
+            <p class="text-gold font-bold">— امرؤ القيس</p>
+          </div>
+        </section>
+
+        <!-- Eras Section -->
+        <section id="eras" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12"
+          >
+            العصور الشعرية
+          </h2>
+          <div class="relative">
+            <div class="timeline-line hidden md:block"></div>
+            <div id="timeline-container" class="space-y-8"></div>
+          </div>
+        </section>
+
+        <!-- Poets Section -->
+        <section id="poets" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12"
+          >
+            أعلام الشعراء
+          </h2>
+          <div
+            id="poets-grid"
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          ></div>
+        </section>
+
+        <!-- Schools Section -->
+        <section id="schools" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12"
+          >
+            المدارس الشعرية الحديثة
+          </h2>
+          <div id="schools-container" class="grid md:grid-cols-2 gap-8"></div>
+        </section>
+
+        <!-- Grammar Section -->
+        <section id="grammar" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-12"
+          >
+            القواعد النحوية والعروضية
+          </h2>
+          <div id="grammar-container" class="space-y-8"></div>
+        </section>
+
+        <!-- Analyzer Section -->
+        <section id="analyzer" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8"
+          >
+            محلل الأبيات الشعرية
+          </h2>
+          <p class="text-center text-ink/70 mb-8">
+            اختر بيتاً شعرياً للحصول على تحليل تفصيلي
+          </p>
+          <div class="max-w-4xl mx-auto">
+            <select
+              id="verse-select"
+              class="w-full p-4 rounded-xl border-2 border-gold bg-white/80 font-amiri text-lg mb-8 cursor-pointer"
+            >
+              <option value="">-- اختر بيتاً شعرياً --</option>
+            </select>
+            <div id="analysis-result" class="hidden"></div>
+          </div>
+        </section>
+
+        <!-- Theater Section -->
+        <section id="theater" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8"
+          >
+            المسرح الشعري التفاعلي
+          </h2>
+          <p class="text-center text-ink/70 mb-8">
+            اختر شاعرين وموضوعاً لمشاهدة حوار شعري بينهما
+          </p>
+          <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+              <div>
+                <label class="block text-ink font-bold mb-2">الشاعر الأول</label>
+                <select
+                  id="poet1-select"
+                  class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"
+                >
+                  <option value="">اختر شاعراً</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-ink font-bold mb-2">الشاعر الثاني</label>
+                <select
+                  id="poet2-select"
+                  class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"
+                >
+                  <option value="">اختر شاعراً</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-ink font-bold mb-2">الموضوع</label>
+                <select
+                  id="topic-select"
+                  class="w-full p-3 rounded-xl border-2 border-gold bg-white/80"
+                >
+                  <option value="">اختر موضوعاً</option>
+                  <option value="love">الحب والغزل</option>
+                  <option value="wisdom">الحكمة</option>
+                  <option value="nature">الطبيعة</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              id="start-theater"
+              class="w-full py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all mb-8"
+            >
+              ابدأ الحوار الشعري
+            </button>
+
+            <div
+              id="theater-stage"
+              class="hidden bg-gradient-to-b from-ink/5 to-ink/10 rounded-2xl p-6 min-h-[400px]"
+            >
+              <div id="dialog-container" class="space-y-4 max-h-[360px] overflow-auto"></div>
+              <div class="text-center mt-6">
+                <button
+                  id="next-verse-btn"
+                  class="px-6 py-3 bg-gold text-ink rounded-xl font-bold hover:bg-burgundy hover:text-parchment transition-all hidden"
+                >
+                  البيت التالي ←
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz" class="section-hidden">
+          <h2
+            class="text-3xl md:text-4xl font-amiri text-burgundy text-center mb-8"
+          >
+            اختبار المعلومات
+          </h2>
+
+          <div id="quiz-intro" class="max-w-2xl mx-auto text-center">
+            <div class="bg-white/50 rounded-2xl p-8 shadow-lg">
+              <svg
+                class="w-16 h-16 mx-auto text-gold mb-4"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                />
+              </svg>
+              <h3 class="text-2xl font-bold text-ink mb-4">هل أنت مستعد؟</h3>
+              <p class="text-ink/70 mb-6">
+                اختبار من 10 أسئلة حول تاريخ الشعر العربي وأعلامه
+              </p>
+              <button
+                id="start-quiz"
+                class="px-8 py-4 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold text-lg hover:shadow-lg transition-all hover:scale-105"
+              >
+                ابدأ الاختبار
+              </button>
+            </div>
+          </div>
+
+          <div id="quiz-container" class="hidden max-w-2xl mx-auto">
+            <!-- Progress Bar -->
+            <div class="mb-8">
+              <div class="flex justify-between text-sm text-ink/70 mb-2">
+                <span>السؤال <span id="current-q">1</span> من 10</span>
+                <span>النقاط: <span id="score">0</span></span>
+              </div>
+              <div class="h-3 bg-darkParchment rounded-full overflow-hidden">
+                <div
+                  id="progress-bar"
+                  class="h-full bg-gradient-to-l from-gold to-burgundy transition-all duration-500"
+                  style="width: 10%"
+                ></div>
+              </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="question-card" class="bg-white/70 rounded-2xl p-8 shadow-lg">
+              <h3 id="question-text" class="text-xl font-bold text-ink mb-6"></h3>
+              <div id="options-container" class="space-y-3"></div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex justify-between mt-6">
+              <button
+                id="prev-q"
+                class="px-6 py-3 border-2 border-gold text-gold rounded-xl font-bold hover:bg-gold hover:text-parchment transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                ← السابق
+              </button>
+              <button
+                id="next-q"
+                class="px-6 py-3 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all disabled:opacity-50"
+              >
+                التالي →
+              </button>
+            </div>
+          </div>
+
+          <div id="quiz-result" class="hidden max-w-2xl mx-auto text-center">
+            <div class="bg-white/70 rounded-2xl p-8 shadow-lg">
+              <div id="result-icon" class="text-6xl mb-4">🏆</div>
+              <h3 id="result-title" class="text-3xl font-bold text-ink mb-4"></h3>
+              <p id="result-score" class="text-xl text-ink/70 mb-6"></p>
+              <div id="result-message" class="text-ink/80 mb-8"></div>
+              <button
+                id="retry-quiz"
+                class="px-8 py-4 bg-gradient-to-l from-gold to-burgundy text-parchment rounded-xl font-bold hover:shadow-lg transition-all"
+              >
+                أعد الاختبار
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Footer -->
+      <footer class="bg-ink text-parchment py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+          <p class="font-amiri text-xl text-gold mb-2">موسوعة الشعر العربي التفاعلية</p>
+          <p class="text-parchment/70 text-sm">
+            تعلم تاريخ الشعر العربي بطريقة تفاعلية وممتعة
+          </p>
+        </div>
+      </footer>
+
+      <!-- Modal -->
+      <div
+        id="modal"
+        class="fixed inset-0 bg-ink/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4"
+      >
+        <div
+          class="bg-parchment rounded-2xl max-w-2xl w-full max-h-[90%] overflow-y-auto shadow-2xl animate-fadeIn"
+        >
+          <div
+            class="sticky top-0 bg-gradient-to-l from-burgundy to-ink p-4 flex justify-between items-center"
+          >
+            <h3 id="modal-title" class="text-xl font-amiri text-gold"></h3>
+            <button onclick="closeModal()" class="text-parchment hover:text-gold text-2xl">
+              ×
+            </button>
+          </div>
+          <div id="modal-content" class="p-6"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ==================== DATA ====================
+      const erasData = [
+        {
+          id: "jahili",
+          name: "العصر الجاهلي",
+          period: "قبل 610م",
+          color: "burgundy",
+          description: "عصر ما قبل الإسلام، تميز بالشعر الفطري والمعلقات السبع",
+          poets: ["امرؤ القيس", "طرفة بن العبد", "زهير بن أبي سلمى", "لبيد بن ربيعة"],
+          verse: "قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ *** بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ",
+          characteristics: ["الفخر والحماسة", "وصف الطبيعة", "الغزل العفيف", "الحكمة"],
+        },
+        {
+          id: "islamic",
+          name: "صدر الإسلام",
+          period: "610م - 661م",
+          color: "gold",
+          description: "فترة البعثة النبوية والخلفاء الراشدين، تأثر الشعر بالقيم الإسلامية",
+          poets: ["حسان بن ثابت", "كعب بن زهير", "الخنساء"],
+          verse: "بانَت سُعادُ فَقَلبي اليَومَ مَتبولُ *** مُتَيَّمٌ إِثرَها لَم يُفدَ مَكبولُ",
+          characteristics: ["المدح النبوي", "الدفاع عن الإسلام", "الرثاء", "الزهد"],
+        },
+        {
+          id: "umayyad",
+          name: "العصر الأموي",
+          period: "661م - 750م",
+          color: "olive",
+          description: "ازدهار الشعر السياسي والغزلي في ظل الدولة الأموية",
+          poets: ["جرير", "الفرزدق", "الأخطل", "عمر بن أبي ربيعة"],
+          verse: "أَقولُ لَها وَقَد طارَت شَعاعاً *** مِنَ الأَبطالِ وَيحَكِ لَن تُراعي",
+          characteristics: ["الشعر السياسي", "النقائض", "الغزل الحضري", "المدح"],
+        },
+        {
+          id: "abbasid",
+          name: "العصر العباسي",
+          period: "750م - 1258م",
+          color: "burgundy",
+          description: "العصر الذهبي للشعر العربي، ظهور التجديد والمدارس الشعرية",
+          poets: ["المتنبي", "أبو تمام", "البحتري", "أبو نواس", "أبو العلاء المعري"],
+          verse: "عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ *** وَتَأتي عَلى قَدرِ الكِرامِ المَكارِمُ",
+          characteristics: ["التجديد في الأساليب", "الفلسفة والحكمة", "البديع والصنعة", "الخمريات"],
+        },
+        {
+          id: "andalusian",
+          name: "العصر الأندلسي",
+          period: "711م - 1492م",
+          color: "gold",
+          description: "شعر الأندلس المتميز بوصف الطبيعة والموشحات",
+          poets: ["ابن زيدون", "ولادة بنت المستكفي", "ابن خفاجة", "لسان الدين بن الخطيب"],
+          verse: "أَضحى التَنائي بَديلاً مِن تَدانينا *** وَنابَ عَن طيبِ لُقيانا تَجافينا",
+          characteristics: ["الموشحات", "وصف الطبيعة", "الغزل الرقيق", "الحنين للوطن"],
+        },
+        {
+          id: "modern",
+          name: "العصر الحديث",
+          period: "1800م - الآن",
+          color: "olive",
+          description: "عصر النهضة والتجديد، ظهور المدارس الشعرية الحديثة",
+          poets: ["أحمد شوقي", "حافظ إبراهيم", "نزار قباني", "محمود درويش"],
+          verse: "قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا *** كادَ المُعَلِّمُ أَن يَكونَ رَسولا",
+          characteristics: ["الشعر الوطني", "التجديد في الشكل", "القضايا الاجتماعية", "الشعر الحر"],
+        },
+      ];
+
+      const poetsData = [
+        {
+          id: "imru",
+          name: "امرؤ القيس",
+          fullName: "امرؤ القيس بن حجر الكندي",
+          era: "العصر الجاهلي",
+          birth: "501م",
+          death: "544م",
+          image: "👑",
+          bio: 'يُلقب بـ"الملك الضليل" و"ذو القروح"، وهو من أشهر شعراء العرب وصاحب إحدى المعلقات السبع',
+          works: ["المعلقة", "ديوان امرئ القيس"],
+          verses: ["قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ", "وَلَيلٍ كَمَوجِ البَحرِ أَرخى سُدولَهُ", "مِكَرٍّ مِفَرٍّ مُقبِلٍ مُدبِرٍ مَعاً"],
+          characteristics: ["إجادة التشبيه", "وصف الخيل", "الغزل الحسي", "الوقوف على الأطلال"],
+        },
+        {
+          id: "mutanabbi",
+          name: "المتنبي",
+          fullName: "أحمد بن الحسين الجعفي الكندي",
+          era: "العصر العباسي",
+          birth: "915م",
+          death: "965م",
+          image: "🏆",
+          bio: "أعظم شعراء العربية، لُقب بالمتنبي لادعائه النبوة في شبابه. اشتهر بحكمته وفخره",
+          works: ["ديوان المتنبي", "قصائد سيف الدولة"],
+          verses: ["عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ", "أَنا الَّذي نَظَرَ الأَعمى إِلى أَدَبي", "الخَيلُ وَاللَيلُ وَالبَيداءُ تَعرِفُني"],
+          characteristics: ["الحكمة العميقة", "الفخر والاعتزاز", "المدح القوي", "الهجاء اللاذع"],
+        },
+        {
+          id: "shawqi",
+          name: "أحمد شوقي",
+          fullName: "أحمد شوقي بن علي بن أحمد شوقي",
+          era: "العصر الحديث",
+          birth: "1868م",
+          death: "1932م",
+          image: "🌟",
+          bio: "أمير الشعراء، رائد مدرسة الإحياء، ومؤسس المسرح الشعري العربي",
+          works: ["الشوقيات", "مجنون ليلى", "مصرع كليوباترا"],
+          verses: ["قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا", "وَطَني لَو شُغِلتُ بِالخُلدِ عَنهُ", "سَلامٌ مِن صَبا بَرَدى أَرَقُّ"],
+          characteristics: ["المسرح الشعري", "الشعر الوطني", "إحياء التراث", "الرثاء"],
+        },
+        {
+          id: "nizar",
+          name: "نزار قباني",
+          fullName: "نزار توفيق قباني",
+          era: "العصر الحديث",
+          birth: "1923م",
+          death: "1998م",
+          image: "🌹",
+          bio: "شاعر الحب والمرأة، من أكثر الشعراء العرب شعبية في العصر الحديث",
+          works: ["قالت لي السمراء", "طفولة نهد", "بلقيس"],
+          verses: ["أحبكِ جداً وأعرف أن الطريق إلى المستحيل طويل", "كلماتي أصبحت خرزاً من الملونات", "علمني حبك أن أحزن"],
+          characteristics: ["شعر الحب", "لغة بسيطة عميقة", "الجرأة في الطرح", "الشعر السياسي"],
+        },
+        {
+          id: "darwish",
+          name: "محمود درويش",
+          fullName: "محمود سليم حسين درويش",
+          era: "العصر الحديث",
+          birth: "1941م",
+          death: "2008م",
+          image: "🕊️",
+          bio: "شاعر المقاومة الفلسطينية، من أهم الشعراء العرب المعاصرين",
+          works: ["أوراق الزيتون", "عاشق من فلسطين", "جدارية"],
+          verses: ["سجّل أنا عربي", "على هذه الأرض ما يستحق الحياة", "أحنُّ إلى خبز أمي"],
+          characteristics: ["شعر المقاومة", "الرمزية", "التجديد في الشعر الحر", "الوطنية"],
+        },
+        {
+          id: "hassan",
+          name: "حسان بن ثابت",
+          fullName: "حسان بن ثابت الأنصاري",
+          era: "صدر الإسلام",
+          birth: "563م",
+          death: "674م",
+          image: "📜",
+          bio: "شاعر الرسول ﷺ، دافع عن الإسلام بشعره وهجا المشركين",
+          works: ["ديوان حسان بن ثابت"],
+          verses: ["وَأَحسَنُ مِنكَ لَم تَرَ قَطُّ عَيني", "أَتَهجوهُ وَلَستَ لَهُ بِكُفءٍ", "هَجَوتَ مُحَمَّداً فَأَجَبتُ عَنهُ"],
+          characteristics: ["الدفاع عن الإسلام", "المدح النبوي", "الهجاء", "الفخر"],
+        },
+        {
+          id: "ibn_zaydun",
+          name: "ابن زيدون",
+          fullName: "أحمد بن عبد الله بن زيدون المخزومي",
+          era: "العصر الأندلسي",
+          birth: "1003م",
+          death: "1071م",
+          image: "🌙",
+          bio: "شاعر الأندلس الأكبر، اشتهر بحبه لولادة بنت المستكفي وقصائده الرقيقة",
+          works: ["الرسالة الجدية", "الرسالة الهزلية", "ديوان ابن زيدون"],
+          verses: ["أَضحى التَنائي بَديلاً مِن تَدانينا", "إِنّي ذَكَرتُكِ بِالزَهراءِ مُشتاقاً", "أَمّا الهَوى فَلَم أَقطَعهُ بِالعِتابِ"],
+          characteristics: ["الغزل الرقيق", "الحنين", "السهولة والعذوبة", "التأثر بالطبيعة"],
+        },
+        {
+          id: "abu_nawas",
+          name: "أبو نواس",
+          fullName: "الحسن بن هانئ الحكمي",
+          era: "العصر العباسي",
+          birth: "756م",
+          death: "814م",
+          image: "🍷",
+          bio: "شاعر الخمريات الأشهر، جدد في الشعر العربي وثار على التقاليد القديمة",
+          works: ["ديوان أبي نواس"],
+          verses: ["دَع عَنكَ لَومي فَإِنَّ اللَومَ إِغراءُ", "أَلا فَاِسقِني خَمراً وَقُل لي هِيَ الخَمرُ", "يا قَمَراً أَبصَرتُهُ يَطلُعُ"],
+          characteristics: ["الخمريات", "التجديد", "الهجاء", "الغزل بالمذكر"],
+        },
+        {
+          id: "zuhayr",
+          name: "زهير بن أبي سلمى",
+          fullName: "زهير بن أبي سلمى ربيعة بن رياح المزني",
+          era: "العصر الجاهلي",
+          birth: "520م",
+          death: "609م",
+          image: "⚖️",
+          bio: "حكيم الشعراء، اشتهر بحولياته التي كان ينقحها سنة كاملة قبل إخراجها",
+          works: ["المعلقة", "ديوان زهير"],
+          verses: ["سَئِمتُ تَكاليفَ الحَياةِ وَمَن يَعِش", "وَمَن لَم يُصانِع في أُمورٍ كَثيرَةٍ", "وَمَن يَجعَلِ المَعروفَ مِن دونِ عِرضِهِ"],
+          characteristics: ["الحكمة", "المدح", "الإتقان الفني", "نبذ الحرب"],
+        },
+        {
+          id: "khansa",
+          name: "الخنساء",
+          fullName: "تماضر بنت عمرو بن الحارث السلمية",
+          era: "صدر الإسلام",
+          birth: "575م",
+          death: "664م",
+          image: "💔",
+          bio: "أشهر شاعرات العرب في الرثاء، اشتهرت برثاء أخويها صخر ومعاوية",
+          works: ["ديوان الخنساء"],
+          verses: ["قَذىً بِعَينِكَ أَم بِالعَينِ عُوّارُ", "وَإِنَّ صَخراً لَتَأتَمُّ الهُداةُ بِهِ", "يا عَينِ جودي بِدَمعٍ مِنكِ مِدرارِ"],
+          characteristics: ["الرثاء", "صدق العاطفة", "التكرار المؤثر", "التصوير الحي"],
+        },
+        {
+          id: "jarir",
+          name: "جرير",
+          fullName: "جرير بن عطية بن حذيفة الخطفي اليربوعي",
+          era: "العصر الأموي",
+          birth: "653م",
+          death: "733م",
+          image: "⚔️",
+          bio: "فحل من فحول الشعر الأموي، اشتهر بنقائضه مع الفرزدق والأخطل",
+          works: ["ديوان جرير", "النقائض"],
+          verses: ["إِنَّ العُيونَ الَّتي في طَرفِها حَوَرٌ", "أَتَصحو أَم فُؤادُكَ غَيرُ صاحِ", "لَولا مُساعَدَةُ الحَياءِ لَمَنطِقي"],
+          characteristics: ["النقائض", "الهجاء", "الغزل", "المدح"],
+        },
+        {
+          id: "maarri",
+          name: "أبو العلاء المعري",
+          fullName: "أحمد بن عبد الله بن سليمان التنوخي المعري",
+          era: "العصر العباسي",
+          birth: "973م",
+          death: "1057م",
+          image: "🔮",
+          bio: "الفيلسوف الشاعر الضرير، اشتهر بفلسفته التشاؤمية وعزلته عن الناس",
+          works: ["لزوم ما لا يلزم", "سقط الزند", "رسالة الغفران"],
+          verses: ["تَعَبُ كُلُّها الحَياةُ فَما أَعجَبُ", "غَيرُ مُجدٍ في مِلَّتي واعتِقادي", "هَذا جَناهُ أَبي عَلَيَّ وَما جَنَيتُ عَلى أَحَدِ"],
+          characteristics: ["الفلسفة", "التشاؤم", "الزهد", "اللزوميات"],
+        },
+      ];
+
+      const schoolsData = [
+        {
+          id: "ihya",
+          name: "مدرسة الإحياء والبعث",
+          period: "أواخر القرن 19",
+          color: "burgundy",
+          icon: "🏛️",
+          description:
+            "أول مدرسة في الشعر العربي الحديث، سعت إلى إحياء التراث الشعري العربي القديم والعودة إلى ينابيعه الأصيلة",
+          characteristics: ["محاكاة الشعر العباسي", "الاهتمام بالديباجة اللفظية", "معالجة القضايا الوطنية والاجتماعية", "المحافظة على وحدة البيت"],
+          poets: ["محمود سامي البارودي", "أحمد شوقي", "حافظ إبراهيم", "أحمد محرم"],
+        },
+        {
+          id: "diwan",
+          name: "مدرسة الديوان",
+          period: "أوائل القرن 20",
+          color: "gold",
+          icon: "📖",
+          description:
+            "مدرسة تجديدية ثارت على التقليد، تأثرت بالأدب الإنجليزي، ركزت على التعبير عن الذات",
+          characteristics: ["الثورة على التقليد", "التعبير عن الذات والتجربة الشخصية", "التأثر بالرومانسية الإنجليزية", "الوحدة العضوية للقصيدة"],
+          poets: ["عباس محمود العقاد", "إبراهيم المازني", "عبد الرحمن شكري"],
+        },
+        {
+          id: "apollo",
+          name: "مدرسة أبولو",
+          period: "1932م",
+          color: "olive",
+          icon: "🌙",
+          description:
+            "مدرسة رومانسية حالمة، أسسها أحمد زكي أبو شادي، اهتمت بالجمال والطبيعة والحب",
+          characteristics: ["الحنين والشوق", "التغني بالطبيعة", "الميل إلى الحزن والألم", "استخدام الرموز"],
+          poets: ["أحمد زكي أبو شادي", "إبراهيم ناجي", "علي محمود طه", "أبو القاسم الشابي"],
+        },
+        {
+          id: "free",
+          name: "مدرسة الشعر الحر",
+          period: "1947م",
+          color: "burgundy",
+          icon: "🕊️",
+          description:
+            "ثورة حقيقية في الشكل الشعري، كسرت نظام الشطرين وأسست لشعر التفعيلة",
+          characteristics: ["التحرر من القافية الموحدة", "استخدام التفعيلة بدل البحر الكامل", "الوحدة العضوية", "استخدام الأسطورة والرمز"],
+          poets: ["نازك الملائكة", "بدر شاكر السياب", "صلاح عبد الصبور", "محمود درويش"],
+        },
+      ];
+
+      const grammarData = [
+        {
+          title: "أقسام الكلام",
+          icon: "📝",
+          content: [
+            { term: "الاسم", definition: "ما دل على معنى في نفسه غير مقترن بزمن (محمد، كتاب، جميل)" },
+            { term: "الفعل", definition: "ما دل على حدث مقترن بزمن (كتبَ، يكتبُ، اكتُبْ)" },
+            { term: "الحرف", definition: "ما دل على معنى في غيره (من، إلى، في، على)" },
+          ],
+        },
+        {
+          title: "علامات الإعراب",
+          icon: "⚙️",
+          content: [
+            { term: "الرفع", definition: "الضمة (يكتبُ المعلمُ)" },
+            { term: "النصب", definition: "الفتحة (رأيتُ المعلمَ)" },
+            { term: "الجر", definition: "الكسرة (مررتُ بالمعلمِ)" },
+            { term: "الجزم", definition: "السكون (لم يكتبْ)" },
+          ],
+        },
+        {
+          title: "أنواع الجملة",
+          icon: "📋",
+          content: [
+            { term: "الجملة الاسمية", definition: "تبدأ باسم، تتكون من مبتدأ وخبر (الشمسُ ساطعةٌ)" },
+            { term: "الجملة الفعلية", definition: "تبدأ بفعل، تتكون من فعل وفاعل (طلعت الشمسُ)" },
+          ],
+        },
+        {
+          title: "البحور الشعرية",
+          icon: "🎵",
+          content: [
+            { term: "الطويل", definition: "فعولن مفاعيلن فعولن مفاعيلن (أشهر البحور)" },
+            { term: "البسيط", definition: "مستفعلن فاعلن مستفعلن فاعلن" },
+            { term: "الكامل", definition: "متفاعلن متفاعلن متفاعلن" },
+            { term: "الوافر", definition: "مفاعلتن مفاعلتن فعولن" },
+            { term: "الخفيف", definition: "فاعلاتن مستفعلن فاعلاتن" },
+            { term: "الرمل", definition: "فاعلاتن فاعلاتن فاعلاتن" },
+          ],
+        },
+        {
+          title: "المنصوبات",
+          icon: "📌",
+          content: [
+            { term: "المفعول به", definition: "من وقع عليه الفعل (قرأتُ الكتابَ)" },
+            { term: "المفعول المطلق", definition: "مصدر يؤكد الفعل (قرأتُ قراءةً)" },
+            { term: "المفعول لأجله", definition: "يبين سبب الفعل (قمتُ إجلالاً)" },
+            { term: "الحال", definition: "يبين هيئة صاحبه (جاء الطفلُ ضاحكاً)" },
+            { term: "التمييز", definition: "يوضح المبهم (اشتريتُ رطلاً تمراً)" },
+          ],
+        },
+        {
+          title: "المجرورات",
+          icon: "🔗",
+          content: [
+            { term: "المجرور بحرف الجر", definition: "ذهبتُ إلى المدرسةِ" },
+            { term: "المجرور بالإضافة", definition: "كتابُ الطالبِ" },
+          ],
+        },
+      ];
+
+      const versesAnalysis = [
+        {
+          id: "v1",
+          verse: "قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ",
+          poet: "امرؤ القيس",
+          era: "العصر الجاهلي",
+          words: [
+            { word: "قفا", meaning: "فعل أمر للمثنى من وقف", root: "و ق ف", irab: "فعل أمر مبني على حذف النون" },
+            { word: "نبكِ", meaning: "نذرف الدموع", root: "ب ك ي", irab: "فعل مضارع مجزوم في جواب الطلب" },
+            { word: "ذكرى", meaning: "التذكر والاستحضار", root: "ذ ك ر", irab: "اسم مجرور بمن" },
+            { word: "حبيب", meaning: "المحبوبة", root: "ح ب ب", irab: "مضاف إليه مجرور" },
+            { word: "منزل", meaning: "مكان الإقامة", root: "ن ز ل", irab: "معطوف مجرور" },
+          ],
+          literary:
+            'يبدأ الشاعر معلقته بطلب الوقوف والبكاء على ذكرى الحبيبة ومنزلها، وهو تقليد جاهلي يسمى "الوقوف على الأطلال"',
+          context:
+            'هذا البيت هو مطلع أشهر قصيدة في الشعر العربي "معلقة امرئ القيس"، وقد كان العرب يبدؤون قصائدهم بالوقوف على الديار المهجورة',
+        },
+        {
+          id: "v2",
+          verse: "عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ",
+          poet: "المتنبي",
+          era: "العصر العباسي",
+          words: [
+            { word: "على", meaning: "حرف جر يفيد التناسب", root: "-", irab: "حرف جر" },
+            { word: "قدر", meaning: "المقدار والحجم", root: "ق د ر", irab: "اسم مجرور" },
+            { word: "أهل", meaning: "أصحاب", root: "أ ه ل", irab: "مضاف إليه مجرور" },
+            { word: "العزم", meaning: "الإرادة القوية", root: "ع ز م", irab: "مضاف إليه مجرور" },
+            { word: "العزائم", meaning: "الأمور العظيمة", root: "ع ز م", irab: "فاعل مرفوع" },
+          ],
+          literary:
+            "يربط المتنبي بين همة الإنسان وبين ما يناله من عظائم الأمور، فكلما علت الهمة عظمت الإنجازات",
+          context:
+            "قالها المتنبي في مدح سيف الدولة الحمداني، وهي من أشهر أبيات الحكمة في الشعر العربي",
+        },
+        {
+          id: "v3",
+          verse: "قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا",
+          poet: "أحمد شوقي",
+          era: "العصر الحديث",
+          words: [
+            { word: "قم", meaning: "انهض واعتدل", root: "ق و م", irab: "فعل أمر مبني على السكون" },
+            { word: "للمعلم", meaning: "لأجل المعلم", root: "ع ل م", irab: "جار ومجرور" },
+            { word: "وفّه", meaning: "أعطه حقه كاملاً", root: "و ف ي", irab: "فعل أمر والهاء مفعول به أول" },
+            { word: "التبجيلا", meaning: "التعظيم والاحترام", root: "ب ج ل", irab: "مفعول به ثانٍ منصوب" },
+          ],
+          literary:
+            "يدعو شوقي إلى تقدير المعلم واحترامه لدوره العظيم في بناء الأجيال",
+          context:
+            "من قصيدة شوقي الشهيرة في المعلم، كتبها تقديراً لدور التعليم في نهضة الأمم",
+        },
+        {
+          id: "v4",
+          verse: "سَجِّل أَنا عَرَبِيّ",
+          poet: "محمود درويش",
+          era: "العصر الحديث",
+          words: [
+            { word: "سجّل", meaning: "اكتب ودوّن", root: "س ج ل", irab: "فعل أمر مبني على السكون" },
+            { word: "أنا", meaning: "ضمير المتكلم", root: "-", irab: "ضمير منفصل مبتدأ" },
+            { word: "عربي", meaning: "من العرب", root: "ع ر ب", irab: "خبر مرفوع" },
+          ],
+          literary:
+            "تعبير عن الهوية والانتماء في مواجهة محاولات الطمس، يؤكد الشاعر هويته بكل فخر واعتزاز",
+          context:
+            'من قصيدة "بطاقة هوية" التي كتبها درويش عام 1964، أصبحت رمزاً للمقاومة الفلسطينية',
+        },
+        {
+          id: "v5",
+          verse: "أَضحى التَنائي بَديلاً مِن تَدانينا",
+          poet: "ابن زيدون",
+          era: "العصر الأندلسي",
+          words: [
+            { word: "أضحى", meaning: "صار وأصبح", root: "ض ح و", irab: "فعل ماضٍ ناقص" },
+            { word: "التنائي", meaning: "البعد والفراق", root: "ن أ ي", irab: "اسم أضحى مرفوع" },
+            { word: "بديلاً", meaning: "عوضاً", root: "ب د ل", irab: "خبر أضحى منصوب" },
+            { word: "تدانينا", meaning: "قربنا من بعض", root: "د ن و", irab: "اسم مجرور والنا ضمير مضاف إليه" },
+          ],
+          literary:
+            "يصف ابن زيدون تحول العلاقة مع ولادة من القرب إلى البعد، معبراً عن حزنه العميق",
+          context:
+            "من قصيدة النونية الشهيرة التي كتبها ابن زيدون في حبه لولادة بنت المستكفي بعد فراقهما",
+        },
+      ];
+
+      const theaterDialogs = {
+        love: {
+          "imru-nizar": [
+            { speaker: "imru", text: "قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ *** بِسِقطِ اللِوى بَينَ الدَخولِ فَحَومَلِ" },
+            { speaker: "nizar", text: "أحبكِ جداً... وأعرف أن الطريق إلى المستحيل طويل" },
+            { speaker: "imru", text: "وَلَيلٍ كَمَوجِ البَحرِ أَرخى سُدولَهُ *** عَلَيَّ بِأَنواعِ الهُمومِ لِيَبتَلي" },
+            { speaker: "nizar", text: "علّمني حبك أن أحزن... وأنا محتاج منذ عصور لامرأة تجعلني أحزن" },
+          ],
+          "mutanabbi-shawqi": [
+            { speaker: "mutanabbi", text: "أُحِبُّكِ يا كُلَّ المَحاسِنِ جُملَةً *** وَإِن كانَ بَعضُ الحُسنِ يُغريني بِبَعضِ" },
+            { speaker: "shawqi", text: "وَما كُنتُ أَدري قَبلَ عَزَّةَ ما البُكا *** وَلا مُوجِعاتِ القَلبِ حَتّى تَوَلَّت" },
+            { speaker: "mutanabbi", text: "أَزورُهُمُ وَسَوادُ اللَيلِ يَشفَعُ لي *** وَأَنثَني وَبَياضُ الصُبحِ يُغري بي" },
+            { speaker: "shawqi", text: "يا جارَةَ الوادي طَرِبتُ وَعادَني *** ما يَشبَهُ الأَحلامَ مِن ذِكراكِ" },
+          ],
+        },
+        wisdom: {
+          "mutanabbi-maarri": [
+            { speaker: "mutanabbi", text: "عَلى قَدرِ أَهلِ العَزمِ تَأتي العَزائِمُ *** وَتَأتي عَلى قَدرِ الكِرامِ المَكارِمُ" },
+            { speaker: "maarri", text: "تَعَبُ كُلُّها الحَياةُ فَما أَعـ *** ـجَبُ إِلاّ مِن راغِبٍ في ازدِيادِ" },
+            { speaker: "mutanabbi", text: "وَمَن يَكُ ذا فَمٍ مُرٍّ مَريضٍ *** يَجِد مُرّاً بِهِ الماءَ الزُلالا" },
+            { speaker: "maarri", text: "غَيرُ مُجدٍ في مِلَّتي واعتِقادي *** نَوحُ باكٍ وَلا تَرَنُّمُ شادِ" },
+          ],
+          "zuhayr-shawqi": [
+            { speaker: "zuhayr", text: "سَئِمتُ تَكاليفَ الحَياةِ وَمَن يَعِش *** ثَمانينَ حَولاً لا أَبا لَكَ يَسأَمِ" },
+            { speaker: "shawqi", text: "وَما نَيلُ المَطالِبِ بِالتَمَنّي *** وَلَكِن تُؤخَذُ الدُنيا غِلابا" },
+            { speaker: "zuhayr", text: "وَمَن لَم يُصانِع في أُمورٍ كَثيرَةٍ *** يُضَرَّس بِأَنيابٍ وَيوطَأ بِمَنسِمِ" },
+            { speaker: "shawqi", text: "قُم لِلمُعَلِّمِ وَفِّهِ التَبجيلا *** كادَ المُعَلِّمُ أَن يَكونَ رَسولا" },
+          ],
+        },
+        nature: {
+          "ibn_zaydun-darwish": [
+            { speaker: "ibn_zaydun", text: "إِنّي ذَكَرتُكِ بِالزَهراءِ مُشتاقاً *** وَالأُفقُ طَلقٌ وَمَرأى الأَرضِ قَد راقا" },
+            { speaker: "darwish", text: "على هذه الأرض ما يستحق الحياة... تردد أبريل، رائحة الخبز في الفجر" },
+            { speaker: "ibn_zaydun", text: "نَهرٌ كَأَنَّ الرِياحَ الدُهرَ تَنسِجُهُ *** دِرعاً لِحُسنِ فَرادى غَيرَ أَزواجِ" },
+            { speaker: "darwish", text: "أحنّ إلى خبز أمي... وقهوة أمي... ولمسة أمي" },
+          ],
+          "abu_nawas-nizar": [
+            { speaker: "abu_nawas", text: "أَلا فَاِسقِني خَمراً وَقُل لي هِيَ الخَمرُ *** وَلا تَسقِني سِرّاً إِذا أَمكَنَ الجَهرُ" },
+            { speaker: "nizar", text: "كلماتي أصبحت خرزاً من الملونات... وعليّ أن أختار" },
+            { speaker: "abu_nawas", text: "دَع عَنكَ لَومي فَإِنَّ اللَومَ إِغراءُ *** وَداوِني بِالَّتي كانَت هِيَ الداءُ" },
+            { speaker: "nizar", text: "ماذا أقول له؟ ماذا أقول لمن يبيع وردته للمزارع؟" },
+          ],
+        },
+      };
+
+      const quizQuestions = [
+        { question: 'من هو صاحب المعلقة التي تبدأ بـ "قفا نبكِ"؟', options: ["طرفة بن العبد", "امرؤ القيس", "زهير بن أبي سلمى", "لبيد بن ربيعة"], correct: 1 },
+        { question: "أي عصر يُعرف بظهور الموشحات؟", options: ["العصر العباسي", "العصر الأموي", "العصر الأندلسي", "العصر الجاهلي"], correct: 2 },
+        { question: "من مؤسس مدرسة الإحياء والبعث؟", options: ["أحمد شوقي", "محمود سامي البارودي", "حافظ إبراهيم", "العقاد"], correct: 1 },
+        { question: "ما هو لقب المتنبي؟", options: ["أمير الشعراء", "شاعر العربية الأكبر", "الملك الضليل", "شاعر الفلاسفة"], correct: 1 },
+        { question: "من شاعر الرسول ﷺ؟", options: ["كعب بن زهير", "حسان بن ثابت", "لبيد بن ربيعة", "عمرو بن كلثوم"], correct: 1 },
+        { question: "أي مدرسة شعرية أسسها أحمد زكي أبو شادي؟", options: ["مدرسة الديوان", "مدرسة أبولو", "مدرسة الإحياء", "مدرسة الشعر الحر"], correct: 1 },
+        { question: "ما هو بحر معلقة امرئ القيس؟", options: ["الكامل", "البسيط", "الطويل", "الوافر"], correct: 2 },
+        { question: 'من صاحب قصيدة "بطاقة هوية"؟', options: ["نزار قباني", "محمود درويش", "صلاح عبد الصبور", "بدر شاكر السياب"], correct: 1 },
+        { question: "ما هي أشهر خصائص الشعر الجاهلي؟", options: ["الرمزية والأسطورة", "الوقوف على الأطلال", "الشعر المسرحي", "الشعر الحر"], correct: 1 },
+        { question: "من رائدة شعر التفعيلة في العراق؟", options: ["فدوى طوقان", "نازك الملائكة", "الخنساء", "ولادة بنت المستكفي"], correct: 1 },
+      ];
+
+      // ==================== STATE ====================
+      let currentSection = "home";
+      let quizState = { currentQuestion: 0, score: 0, answers: [], selectedAnswer: null };
+      let theaterState = { currentVerse: 0, dialog: [], poet1: null, poet2: null };
+
+      // ==================== NAVIGATION ====================
+      function showSection(sectionId) {
+        document.querySelectorAll("main > section").forEach((section) => {
+          section.classList.remove("section-visible");
+          section.classList.add("section-hidden");
+        });
+
+        const target = document.getElementById(sectionId);
+        if (target) {
+          target.classList.remove("section-hidden");
+          target.classList.add("section-visible");
+        }
+
+        document.querySelectorAll(".nav-link, .nav-link-mobile").forEach((link) => {
+          link.classList.remove("active");
+          if (link.dataset.section === sectionId) link.classList.add("active");
+        });
+
+        document.getElementById("mobile-nav").classList.add("hidden");
+        currentSection = sectionId;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      // ==================== RENDER FUNCTIONS ====================
+      function renderTimeline() {
+        const container = document.getElementById("timeline-container");
+        container.innerHTML = erasData
+          .map(
+            (era, index) => `
+          <div class="relative flex items-center ${
+            index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+          } animate-slideIn" style="animation-delay: ${index * 0.1}s">
+            <div class="hidden md:block w-1/2"></div>
+            <div class="absolute right-1/2 transform translate-x-1/2 md:translate-x-0 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-${
+              era.color
+            } border-4 border-parchment shadow-lg z-10">
+              <span class="text-parchment text-xl">📜</span>
+            </div>
+            <div class="w-full md:w-1/2 pr-8 md:pr-16 md:pl-8">
+              <div class="bg-white/80 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all border-r-4 border-${
+                era.color
+              } cursor-pointer group" onclick="showEraModal('${era.id}')">
+                <div class="flex items-center gap-3 mb-3">
+                  <span class="px-3 py-1 bg-${era.color}/20 text-${era.color} rounded-full text-sm font-bold">${
+                    era.period
+                  }</span>
+                </div>
+                <h3 class="text-xl font-bold text-ink mb-2 group-hover:text-${era.color} transition-colors">${
+                  era.name
+                }</h3>
+                <p class="text-ink/70 mb-4">${era.description}</p>
+                <div class="font-amiri text-lg text-ink/80 italic border-r-2 border-${era.color} pr-4">
+                  "${era.verse.split("***")[0]}"
+                </div>
+                <div class="mt-4 flex flex-wrap gap-2">
+                  ${era.poets
+                    .slice(0, 3)
+                    .map((poet) => `<span class="text-xs bg-darkParchment px-2 py-1 rounded">${poet}</span>`)
+                    .join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderPoets() {
+        const container = document.getElementById("poets-grid");
+        container.innerHTML = poetsData
+          .map(
+            (poet, index) => `
+          <div class="poet-card bg-white/80 rounded-2xl p-6 shadow-lg cursor-pointer transition-all duration-300 animate-fadeIn"
+               style="animation-delay: ${index * 0.05}s"
+               onclick="showPoetModal('${poet.id}')">
+            <div class="text-center mb-4">
+              <div class="text-5xl mb-3">${poet.image}</div>
+              <h3 class="text-xl font-bold text-ink">${poet.name}</h3>
+              <span class="text-sm text-gold">${poet.era}</span>
+            </div>
+            <p class="text-ink/70 text-sm text-center line-clamp-3">${poet.bio}</p>
+            <div class="mt-4 text-center">
+              <span class="text-burgundy text-sm hover:underline">اقرأ المزيد ←</span>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderSchools() {
+        const container = document.getElementById("schools-container");
+        container.innerHTML = schoolsData
+          .map(
+            (school, index) => `
+          <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn" style="animation-delay: ${
+            index * 0.1
+          }s">
+            <div class="bg-gradient-to-l from-${school.color} to-ink p-4">
+              <div class="flex items-center gap-3">
+                <span class="text-3xl">${school.icon}</span>
+                <div>
+                  <h3 class="text-xl font-bold text-parchment">${school.name}</h3>
+                  <span class="text-gold text-sm">${school.period}</span>
+                </div>
+              </div>
+            </div>
+            <div class="p-6">
+              <p class="text-ink/80 mb-4">${school.description}</p>
+              <h4 class="font-bold text-ink mb-2">الخصائص:</h4>
+              <ul class="space-y-2 mb-4">
+                ${school.characteristics
+                  .map(
+                    (char) => `
+                  <li class="flex items-start gap-2">
+                    <span class="text-${school.color}">◆</span>
+                    <span class="text-ink/70">${char}</span>
+                  </li>
+                `
+                  )
+                  .join("")}
+              </ul>
+              <h4 class="font-bold text-ink mb-2">أبرز الشعراء:</h4>
+              <div class="flex flex-wrap gap-2">
+                ${school.poets
+                  .map(
+                    (poet) =>
+                      `<span class="px-3 py-1 bg-${school.color}/10 text-${school.color} rounded-full text-sm">${poet}</span>`
+                  )
+                  .join("")}
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderGrammar() {
+        const container = document.getElementById("grammar-container");
+        container.innerHTML = grammarData
+          .map(
+            (section, index) => `
+          <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn" style="animation-delay: ${
+            index * 0.1
+          }s">
+            <div class="bg-gradient-to-l from-gold to-burgundy p-4 flex items-center gap-3">
+              <span class="text-2xl">${section.icon}</span>
+              <h3 class="text-xl font-bold text-parchment">${section.title}</h3>
+            </div>
+            <div class="p-6">
+              <div class="space-y-4">
+                ${section.content
+                  .map(
+                    (item) => `
+                  <div class="border-r-4 border-gold pr-4 py-2">
+                    <h4 class="font-bold text-burgundy">${item.term}</h4>
+                    <p class="text-ink/70">${item.definition}</p>
+                  </div>
+                `
+                  )
+                  .join("")}
+              </div>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function renderAnalyzerOptions() {
+        const select = document.getElementById("verse-select");
+        select.innerHTML =
+          '<option value="">-- اختر بيتاً شعرياً --</option>' +
+          versesAnalysis.map((v) => `<option value="${v.id}">${v.verse} — ${v.poet}</option>`).join("");
+      }
+
+      function renderTheaterOptions() {
+        const poets = poetsData.filter((p) =>
+          ["imru", "mutanabbi", "shawqi", "nizar", "darwish", "maarri", "zuhayr", "ibn_zaydun", "abu_nawas"].includes(p.id)
+        );
+
+        const options =
+          '<option value="">اختر شاعراً</option>' +
+          poets.map((p) => `<option value="${p.id}">${p.name}</option>`).join("");
+
+        document.getElementById("poet1-select").innerHTML = options;
+        document.getElementById("poet2-select").innerHTML = options;
+      }
+
+      // ==================== MODAL FUNCTIONS ====================
+      function showModal(title, content) {
+        document.getElementById("modal-title").textContent = title;
+        document.getElementById("modal-content").innerHTML = content;
+        const modal = document.getElementById("modal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModal() {
+        const modal = document.getElementById("modal");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+        document.body.style.overflow = "";
+      }
+
+      function showEraModal(eraId) {
+        const era = erasData.find((e) => e.id === eraId);
+        if (!era) return;
+
+        const content = `
+          <div class="space-y-4">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="px-4 py-2 bg-${era.color}/20 text-${era.color} rounded-full font-bold">${era.period}</span>
+            </div>
+            <p class="text-ink/80 text-lg">${era.description}</p>
+
+            <div class="bg-${era.color}/5 rounded-xl p-4 my-4">
+              <p class="font-amiri text-xl text-center text-ink leading-relaxed">
+                ${era.verse.replace("***", "<br>")}
+              </p>
+            </div>
+
+            <h4 class="font-bold text-ink text-lg">أشهر الشعراء:</h4>
+            <div class="flex flex-wrap gap-2">
+              ${era.poets.map((poet) => `<span class="px-3 py-2 bg-darkParchment rounded-lg">${poet}</span>`).join("")}
+            </div>
+
+            <h4 class="font-bold text-ink text-lg mt-4">خصائص الشعر:</h4>
+            <ul class="grid grid-cols-2 gap-2">
+              ${era.characteristics
+                .map(
+                  (char) => `
+                <li class="flex items-center gap-2">
+                  <span class="text-${era.color}">◆</span>
+                  ${char}
+                </li>
+              `
+                )
+                .join("")}
+            </ul>
+          </div>
+        `;
+
+        showModal(era.name, content);
+      }
+
+      function showPoetModal(poetId) {
+        const poet = poetsData.find((p) => p.id === poetId);
+        if (!poet) return;
+
+        const content = `
+          <div class="text-center mb-6">
+            <div class="text-6xl mb-3">${poet.image}</div>
+            <h3 class="text-2xl font-bold text-ink">${poet.fullName}</h3>
+            <div class="flex justify-center gap-4 mt-2 text-sm text-ink/70">
+              <span>🕰️ ${poet.birth} - ${poet.death}</span>
+              <span>📜 ${poet.era}</span>
+            </div>
+          </div>
+
+          <p class="text-ink/80 text-lg mb-6">${poet.bio}</p>
+
+          <div class="bg-burgundy/5 rounded-xl p-4 mb-6">
+            <h4 class="font-bold text-burgundy mb-3">أبيات مختارة:</h4>
+            <div class="space-y-2 font-amiri text-lg">
+              ${poet.verses.map((verse) => `<p class="border-r-2 border-gold pr-3">${verse}</p>`).join("")}
+            </div>
+          </div>
+
+          <h4 class="font-bold text-ink mb-2">أشهر الأعمال:</h4>
+          <div class="flex flex-wrap gap-2 mb-4">
+            ${poet.works.map((work) => `<span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">${work}</span>`).join("")}
+          </div>
+
+          <h4 class="font-bold text-ink mb-2">الخصائص الأدبية:</h4>
           <ul class="grid grid-cols-2 gap-2">
-            ${era.characteristics.map(char => `
+            ${poet.characteristics
+              .map(
+                (char) => `
               <li class="flex items-center gap-2">
-                <span class="text-${era.color}">◆</span>
+                <span class="text-burgundy">◆</span>
                 ${char}
               </li>
-            `).join('')}
+            `
+              )
+              .join("")}
           </ul>
-        </div>
-      `;
-      
-      showModal(era.name, content);
-    }
+        `;
 
-    function showPoetModal(poetId) {
-      const poet = poetsData.find(p => p.id === poetId);
-      if (!poet) return;
-      
-      const content = `
-        <div class="text-center mb-6">
-          <div class="text-6xl mb-3">${poet.image}</div>
-          <h3 class="text-2xl font-bold text-ink">${poet.fullName}</h3>
-          <div class="flex justify-center gap-4 mt-2 text-sm text-ink/70">
-            <span>🕰️ ${poet.birth} - ${poet.death}</span>
-            <span>📜 ${poet.era}</span>
-          </div>
-        </div>
-        
-        <p class="text-ink/80 text-lg mb-6">${poet.bio}</p>
-        
-        <div class="bg-burgundy/5 rounded-xl p-4 mb-6">
-          <h4 class="font-bold text-burgundy mb-3">أبيات مختارة:</h4>
-          <div class="space-y-2 font-amiri text-lg">
-            ${poet.verses.map(verse => `
-              <p class="border-r-2 border-gold pr-3">${verse}</p>
-            `).join('')}
-          </div>
-        </div>
-        
-        <h4 class="font-bold text-ink mb-2">أشهر الأعمال:</h4>
-        <div class="flex flex-wrap gap-2 mb-4">
-          ${poet.works.map(work => `
-            <span class="px-3 py-1 bg-gold/20 text-gold rounded-full text-sm">${work}</span>
-          `).join('')}
-        </div>
-        
-        <h4 class="font-bold text-ink mb-2">الخصائص الأدبية:</h4>
-        <ul class="grid grid-cols-2 gap-2">
-          ${poet.characteristics.map(char => `
-            <li class="flex items-center gap-2">
-              <span class="text-burgundy">◆</span>
-              ${char}
-            </li>
-          `).join('')}
-        </ul>
-      `;
-      
-      showModal(poet.name, content);
-    }
-
-    // ==================== ANALYZER FUNCTIONS ====================
-    
-    function analyzeVerse(verseId) {
-      const analysis = versesAnalysis.find(v => v.id === verseId);
-      if (!analysis) {
-        document.getElementById('analysis-result').classList.add('hidden');
-        return;
+        showModal(poet.name, content);
       }
-      
-      const resultHtml = `
-        <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn">
-          <div class="bg-gradient-to-l from-burgundy to-ink p-6">
-            <p class="font-amiri text-2xl text-gold text-center">${analysis.verse}</p>
-            <p class="text-parchment/80 text-center mt-2">— ${analysis.poet} | ${analysis.era}</p>
-          </div>
-          
-          <div class="p-6 space-y-6">
-            <div>
-              <h3 class="text-xl font-bold text-burgundy mb-4 flex items-center gap-2">
-                <span>📖</span> تحليل المفردات
-              </h3>
-              <div class="overflow-x-auto">
-                <table class="w-full border-collapse">
-                  <thead>
-                    <tr class="bg-darkParchment">
-                      <th class="p-3 text-right">الكلمة</th>
-                      <th class="p-3 text-right">المعنى</th>
-                      <th class="p-3 text-right">الجذر</th>
-                      <th class="p-3 text-right">الإعراب</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${analysis.words.map(word => `
-                      <tr class="border-b border-darkParchment/50">
-                        <td class="p-3 font-bold text-burgundy">${word.word}</td>
-                        <td class="p-3 text-ink/80">${word.meaning}</td>
-                        <td class="p-3 text-gold font-mono">${word.root}</td>
-                        <td class="p-3 text-ink/70 text-sm">${word.irab}</td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-4">
-              <div class="bg-gold/10 rounded-xl p-4">
-                <h4 class="font-bold text-gold mb-2 flex items-center gap-2">
-                  <span>✨</span> الشرح الأدبي
-                </h4>
-                <p class="text-ink/80">${analysis.literary}</p>
-              </div>
-              
-              <div class="bg-burgundy/10 rounded-xl p-4">
-                <h4 class="font-bold text-burgundy mb-2 flex items-center gap-2">
-                  <span>📜</span> السياق التاريخي
-                </h4>
-                <p class="text-ink/80">${analysis.context}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('analysis-result').innerHTML = resultHtml;
-      document.getElementById('analysis-result').classList.remove('hidden');
-    }
 
-    // ==================== THEATER FUNCTIONS ====================
-    
-    function startTheater() {
-      const poet1Id = document.getElementById('poet1-select').value;
-      const poet2Id = document.getElementById('poet2-select').value;
-      const topic = document.getElementById('topic-select').value;
-      
-      if (!poet1Id || !poet2Id || !topic) {
-        showInlineMessage('الرجاء اختيار شاعرين وموضوع', 'error');
-        return;
-      }
-      
-      if (poet1Id === poet2Id) {
-        showInlineMessage('الرجاء اختيار شاعرين مختلفين', 'error');
-        return;
-      }
-      
-      const dialogKey = `${poet1Id}-${poet2Id}`;
-      const reverseKey = `${poet2Id}-${poet1Id}`;
-      
-      let dialog = theaterDialogs[topic]?.[dialogKey] || theaterDialogs[topic]?.[reverseKey];
-      
-      if (!dialog) {
-        const poet1 = poetsData.find(p => p.id === poet1Id);
-        const poet2 = poetsData.find(p => p.id === poet2Id);
-        
-        dialog = [
-          { speaker: poet1Id, text: poet1.verses[0] },
-          { speaker: poet2Id, text: poet2.verses[0] },
-          { speaker: poet1Id, text: poet1.verses[1] || poet1.verses[0] },
-          { speaker: poet2Id, text: poet2.verses[1] || poet2.verses[0] }
-        ];
-      }
-      
-      theaterState = {
-        currentVerse: 0,
-        dialog: dialog,
-        poet1: poetsData.find(p => p.id === poet1Id),
-        poet2: poetsData.find(p => p.id === poet2Id)
-      };
-      
-      document.getElementById('theater-stage').classList.remove('hidden');
-      document.getElementById('dialog-container').innerHTML = '';
-      document.getElementById('next-verse-btn').classList.remove('hidden');
-      
-      showNextVerse();
-    }
+      // ==================== ANALYZER FUNCTIONS ====================
+      function analyzeVerse(verseId) {
+        const analysis = versesAnalysis.find((v) => v.id === verseId);
+        const result = document.getElementById("analysis-result");
 
-    function showNextVerse() {
-      if (theaterState.currentVerse >= theaterState.dialog.length) {
-        document.getElementById('next-verse-btn').textContent = 'انتهى الحوار';
-        document.getElementById('next-verse-btn').disabled = true;
-        return;
-      }
-      
-      const verse = theaterState.dialog[theaterState.currentVerse];
-      const poet = verse.speaker === theaterState.poet1.id ? theaterState.poet1 : theaterState.poet2;
-      const isLeft = verse.speaker === theaterState.poet2.id;
-      
-      const bubbleHtml = `
-        <div class="flex items-start gap-3 ${isLeft ? 'flex-row-reverse' : ''} bubble-animation">
-          <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-gold to-burgundy flex items-center justify-center text-2xl shadow-lg">
-            ${poet.image}
-          </div>
-          <div class="max-w-md ${isLeft ? 'bg-burgundy/10' : 'bg-gold/10'} rounded-2xl ${isLeft ? 'rounded-tl-none' : 'rounded-tr-none'} p-4 shadow-md">
-            <p class="font-bold text-sm ${isLeft ? 'text-burgundy' : 'text-gold'} mb-2">${poet.name}</p>
-            <p class="font-amiri text-lg text-ink">${verse.text}</p>
-          </div>
-        </div>
-      `;
-      
-      document.getElementById('dialog-container').innerHTML += bubbleHtml;
-      theaterState.currentVerse++;
-      
-      const container = document.getElementById('dialog-container');
-      container.scrollTop = container.scrollHeight;
-      
-      if (theaterState.currentVerse >= theaterState.dialog.length) {
-        document.getElementById('next-verse-btn').textContent = '🎭 انتهى الحوار';
-        document.getElementById('next-verse-btn').classList.add('bg-olive');
-        document.getElementById('next-verse-btn').classList.remove('bg-gold');
-      }
-    }
-
-    // ==================== QUIZ FUNCTIONS ====================
-    
-    function startQuiz() {
-      quizState = {
-        currentQuestion: 0,
-        score: 0,
-        answers: new Array(quizQuestions.length).fill(null),
-        selectedAnswer: null
-      };
-      
-      document.getElementById('quiz-intro').classList.add('hidden');
-      document.getElementById('quiz-container').classList.remove('hidden');
-      document.getElementById('quiz-result').classList.add('hidden');
-      
-      renderQuestion();
-    }
-
-    function renderQuestion() {
-      const q = quizQuestions[quizState.currentQuestion];
-      const selectedAnswer = quizState.answers[quizState.currentQuestion];
-      
-      document.getElementById('current-q').textContent = quizState.currentQuestion + 1;
-      document.getElementById('score').textContent = quizState.score;
-      document.getElementById('progress-bar').style.width = `${((quizState.currentQuestion + 1) / quizQuestions.length) * 100}%`;
-      
-      document.getElementById('question-text').textContent = q.question;
-      
-      document.getElementById('options-container').innerHTML = q.options.map((option, index) => `
-        <button class="w-full p-4 text-right rounded-xl border-2 transition-all ${
-          selectedAnswer === index 
-            ? 'border-gold bg-gold/20' 
-            : 'border-darkParchment hover:border-gold hover:bg-gold/5'
-        }" onclick="selectAnswer(${index})">
-          <span class="inline-block w-8 h-8 rounded-full bg-darkParchment text-ink text-center leading-8 ml-3">${String.fromCharCode(1571 + index)}</span>
-          ${option}
-        </button>
-      `).join('');
-      
-      document.getElementById('prev-q').disabled = quizState.currentQuestion === 0;
-      document.getElementById('next-q').textContent = quizState.currentQuestion === quizQuestions.length - 1 ? 'إنهاء الاختبار' : 'التالي →';
-    }
-
-    function selectAnswer(index) {
-      quizState.answers[quizState.currentQuestion] = index;
-      renderQuestion();
-    }
-
-    function nextQuestion() {
-      if (quizState.answers[quizState.currentQuestion] === null) {
-        showInlineMessage('الرجاء اختيار إجابة', 'warning');
-        return;
-      }
-      
-      if (quizState.currentQuestion === quizQuestions.length - 1) {
-        calculateResults();
-      } else {
-        quizState.currentQuestion++;
-        renderQuestion();
-      }
-    }
-
-    function prevQuestion() {
-      if (quizState.currentQuestion > 0) {
-        quizState.currentQuestion--;
-        renderQuestion();
-      }
-    }
-
-    function calculateResults() {
-      let score = 0;
-      quizQuestions.forEach((q, index) => {
-        if (quizState.answers[index] === q.correct) {
-          score++;
+        if (!analysis) {
+          result.classList.add("hidden");
+          result.innerHTML = "";
+          return;
         }
-      });
-      
-      quizState.score = score;
-      const percentage = (score / quizQuestions.length) * 100;
-      
-      let icon, title, message;
-      if (percentage >= 90) {
-        icon = '🏆';
-        title = 'ممتاز!';
-        message = 'أنت خبير حقيقي في الشعر العربي! معرفتك واسعة ومدهشة.';
-      } else if (percentage >= 70) {
-        icon = '🌟';
-        title = 'جيد جداً!';
-        message = 'لديك معرفة جيدة بالشعر العربي. استمر في التعلم!';
-      } else if (percentage >= 50) {
-        icon = '📚';
-        title = 'جيد';
-        message = 'بداية جيدة! تابع استكشاف موسوعة الشعر العربي لتعزيز معرفتك.';
-      } else {
-        icon = '💪';
-        title = 'حاول مرة أخرى';
-        message = 'لا تيأس! استكشف الموسوعة وتعرف على المزيد عن الشعر العربي.';
+
+        result.innerHTML = `
+          <div class="bg-white/80 rounded-2xl overflow-hidden shadow-lg animate-fadeIn">
+            <div class="bg-gradient-to-l from-burgundy to-ink p-6">
+              <p class="font-amiri text-2xl text-gold text-center">${analysis.verse}</p>
+              <p class="text-parchment/80 text-center mt-2">— ${analysis.poet} | ${analysis.era}</p>
+            </div>
+
+            <div class="p-6 space-y-6">
+              <div>
+                <h3 class="text-xl font-bold text-burgundy mb-4 flex items-center gap-2">
+                  <span>📖</span> تحليل المفردات
+                </h3>
+                <div class="overflow-x-auto">
+                  <table class="w-full border-collapse">
+                    <thead>
+                      <tr class="bg-darkParchment">
+                        <th class="p-3 text-right">الكلمة</th>
+                        <th class="p-3 text-right">المعنى</th>
+                        <th class="p-3 text-right">الجذر</th>
+                        <th class="p-3 text-right">الإعراب</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      ${analysis.words
+                        .map(
+                          (word) => `
+                        <tr class="border-b border-darkParchment/50">
+                          <td class="p-3 font-bold text-burgundy">${word.word}</td>
+                          <td class="p-3 text-ink/80">${word.meaning}</td>
+                          <td class="p-3 text-gold font-mono">${word.root}</td>
+                          <td class="p-3 text-ink/70 text-sm">${word.irab}</td>
+                        </tr>
+                      `
+                        )
+                        .join("")}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="bg-gold/10 rounded-xl p-4">
+                  <h4 class="font-bold text-gold mb-2 flex items-center gap-2">
+                    <span>✨</span> الشرح الأدبي
+                  </h4>
+                  <p class="text-ink/80">${analysis.literary}</p>
+                </div>
+
+                <div class="bg-burgundy/10 rounded-xl p-4">
+                  <h4 class="font-bold text-burgundy mb-2 flex items-center gap-2">
+                    <span>📜</span> السياق التاريخي
+                  </h4>
+                  <p class="text-ink/80">${analysis.context}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        result.classList.remove("hidden");
       }
-      
-      document.getElementById('quiz-container').classList.add('hidden');
-      document.getElementById('quiz-result').classList.remove('hidden');
-      
-      document.getElementById('result-icon').textContent = icon;
-      document.getElementById('result-title').textContent = title;
-      document.getElementById('result-score').textContent = `حصلت على ${score} من ${quizQuestions.length} (${percentage}%)`;
-      document.getElementById('result-message').textContent = message;
-    }
 
-    function retryQuiz() {
-      document.getElementById('quiz-result').classList.add('hidden');
-      document.getElementById('quiz-intro').classList.remove('hidden');
-    }
+      // ==================== THEATER FUNCTIONS ====================
+      function startTheater() {
+        const poet1Id = document.getElementById("poet1-select").value;
+        const poet2Id = document.getElementById("poet2-select").value;
+        const topic = document.getElementById("topic-select").value;
 
-    // ==================== UTILITY FUNCTIONS ====================
-    
-    function showInlineMessage(message, type = 'info') {
-      const colors = {
-        error: 'bg-red-100 border-red-500 text-red-700',
-        warning: 'bg-yellow-100 border-yellow-500 text-yellow-700',
-        success: 'bg-green-100 border-green-500 text-green-700',
-        info: 'bg-blue-100 border-blue-500 text-blue-700'
-      };
-      
-      const existingToast = document.querySelector('.toast-message');
-      if (existingToast) existingToast.remove();
-      
-      const toast = document.createElement('div');
-      toast.className = `toast-message fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl border-2 ${colors[type]} shadow-lg z-50 animate-fadeIn`;
-      toast.textContent = message;
-      document.body.appendChild(toast);
-      
-      setTimeout(() => toast.remove(), 3000);
-    }
+        if (!poet1Id || !poet2Id || !topic) return showInlineMessage("الرجاء اختيار شاعرين وموضوع", "error");
+        if (poet1Id === poet2Id) return showInlineMessage("الرجاء اختيار شاعرين مختلفين", "error");
 
-    // ==================== ELEMENT SDK ====================
-    
-    async function initElementSdk() {
-      if (!window.elementSdk) return;
-      
-      await window.elementSdk.init({
-        defaultConfig,
-        onConfigChange: async (config) => {
-          const siteTitle = document.getElementById('site-title');
-          const welcomeText = document.getElementById('welcome-text');
-          
-          if (siteTitle) siteTitle.textContent = config.site_title || defaultConfig.site_title;
-          if (welcomeText) welcomeText.textContent = config.welcome_text || defaultConfig.welcome_text;
-          
-          const fontFamily = config.font_family || defaultConfig.font_family;
-          document.body.style.fontFamily = `${fontFamily}, Tajawal, sans-serif`;
-          
-          const bgColor = config.background_color || defaultConfig.background_color;
-          document.body.style.backgroundColor = bgColor;
-        },
-        mapToCapabilities: (config) => ({
-          recolorables: [
-            {
-              get: () => config.background_color || defaultConfig.background_color,
-              set: (value) => window.elementSdk.setConfig({ background_color: value })
-            },
-            {
-              get: () => config.surface_color || defaultConfig.surface_color,
-              set: (value) => window.elementSdk.setConfig({ surface_color: value })
-            },
-            {
-              get: () => config.text_color || defaultConfig.text_color,
-              set: (value) => window.elementSdk.setConfig({ text_color: value })
-            },
-            {
-              get: () => config.primary_action_color || defaultConfig.primary_action_color,
-              set: (value) => window.elementSdk.setConfig({ primary_action_color: value })
-            },
-            {
-              get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
-              set: (value) => window.elementSdk.setConfig({ secondary_action_color: value })
-            }
-          ],
-          borderables: [],
-          fontEditable: {
-            get: () => config.font_family || defaultConfig.font_family,
-            set: (value) => window.elementSdk.setConfig({ font_family: value })
-          },
-          fontSizeable: {
-            get: () => config.font_size || defaultConfig.font_size,
-            set: (value) => window.elementSdk.setConfig({ font_size: value })
-          }
-        }),
-        mapToEditPanelValues: (config) => new Map([
-          ['site_title', config.site_title || defaultConfig.site_title],
-          ['welcome_text', config.welcome_text || defaultConfig.welcome_text]
-        ])
-      });
-    }
+        const dialogKey = `${poet1Id}-${poet2Id}`;
+        const reverseKey = `${poet2Id}-${poet1Id}`;
 
-    // ==================== INITIALIZATION ====================
-    
-    function init() {
-      // Navigation event listeners
-      document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(link => {
-        link.addEventListener('click', () => showSection(link.dataset.section));
-      });
-      
-      // Mobile menu toggle
-      document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-        document.getElementById('mobile-nav').classList.toggle('hidden');
-      });
-      
-      // Modal close on backdrop click
-      document.getElementById('modal').addEventListener('click', (e) => {
-        if (e.target.id === 'modal') closeModal();
-      });
-      
-      // Analyzer
-      document.getElementById('verse-select').addEventListener('change', (e) => {
-        analyzeVerse(e.target.value);
-      });
-      
-      // Theater
-      document.getElementById('start-theater').addEventListener('click', startTheater);
-      document.getElementById('next-verse-btn').addEventListener('click', showNextVerse);
-      
-      // Quiz
-      document.getElementById('start-quiz').addEventListener('click', startQuiz);
-      document.getElementById('next-q').addEventListener('click', nextQuestion);
-      document.getElementById('prev-q').addEventListener('click', prevQuestion);
-      document.getElementById('retry-quiz').addEventListener('click', retryQuiz);
-      
-      // Render content
-      renderTimeline();
-      renderPoets();
-      renderSchools();
-      renderGrammar();
-      renderAnalyzerOptions();
-      renderTheaterOptions();
-      
-      // Initialize Element SDK
-      initElementSdk();
-    }
+        let dialog = theaterDialogs[topic]?.[dialogKey] || theaterDialogs[topic]?.[reverseKey];
 
-    // Start the application
-    init();
-  </script>
- </script>
- </body>
+        if (!dialog) {
+          const poet1 = poetsData.find((p) => p.id === poet1Id);
+          const poet2 = poetsData.find((p) => p.id === poet2Id);
+          dialog = [
+            { speaker: poet1Id, text: poet1.verses[0] },
+            { speaker: poet2Id, text: poet2.verses[0] },
+            { speaker: poet1Id, text: poet1.verses[1] || poet1.verses[0] },
+            { speaker: poet2Id, text: poet2.verses[1] || poet2.verses[0] },
+          ];
+        }
+
+        theaterState = {
+          currentVerse: 0,
+          dialog,
+          poet1: poetsData.find((p) => p.id === poet1Id),
+          poet2: poetsData.find((p) => p.id === poet2Id),
+        };
+
+        document.getElementById("theater-stage").classList.remove("hidden");
+        document.getElementById("dialog-container").innerHTML = "";
+        const nextBtn = document.getElementById("next-verse-btn");
+        nextBtn.classList.remove("hidden");
+        nextBtn.disabled = false;
+        nextBtn.textContent = "البيت التالي ←";
+        nextBtn.classList.remove("bg-olive");
+        nextBtn.classList.add("bg-gold");
+
+        showNextVerse();
+      }
+
+      function showNextVerse() {
+        const nextBtn = document.getElementById("next-verse-btn");
+        if (theaterState.currentVerse >= theaterState.dialog.length) {
+          nextBtn.textContent = "🎭 انتهى الحوار";
+          nextBtn.disabled = true;
+          nextBtn.classList.add("bg-olive");
+          nextBtn.classList.remove("bg-gold");
+          return;
+        }
+
+        const verse = theaterState.dialog[theaterState.currentVerse];
+        const poet = verse.speaker === theaterState.poet1.id ? theaterState.poet1 : theaterState.poet2;
+        const isLeft = verse.speaker === theaterState.poet2.id;
+
+        const bubbleHtml = `
+          <div class="flex items-start gap-3 ${isLeft ? "flex-row-reverse" : ""} bubble-animation">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-gold to-burgundy flex items-center justify-center text-2xl shadow-lg">
+              ${poet.image}
+            </div>
+            <div class="max-w-md ${isLeft ? "bg-burgundy/10" : "bg-gold/10"} rounded-2xl ${
+          isLeft ? "rounded-tl-none" : "rounded-tr-none"
+        } p-4 shadow-md">
+              <p class="font-bold text-sm ${isLeft ? "text-burgundy" : "text-gold"} mb-2">${poet.name}</p>
+              <p class="font-amiri text-lg text-ink">${verse.text}</p>
+            </div>
+          </div>
+        `;
+
+        const container = document.getElementById("dialog-container");
+        container.innerHTML += bubbleHtml;
+        theaterState.currentVerse += 1;
+        container.scrollTop = container.scrollHeight;
+
+        if (theaterState.currentVerse >= theaterState.dialog.length) {
+          nextBtn.textContent = "🎭 انتهى الحوار";
+          nextBtn.classList.add("bg-olive");
+          nextBtn.classList.remove("bg-gold");
+        }
+      }
+
+      // ==================== QUIZ FUNCTIONS ====================
+      function startQuiz() {
+        quizState = {
+          currentQuestion: 0,
+          score: 0,
+          answers: new Array(quizQuestions.length).fill(null),
+          selectedAnswer: null,
+        };
+
+        document.getElementById("quiz-intro").classList.add("hidden");
+        document.getElementById("quiz-container").classList.remove("hidden");
+        document.getElementById("quiz-result").classList.add("hidden");
+
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        const q = quizQuestions[quizState.currentQuestion];
+        const selectedAnswer = quizState.answers[quizState.currentQuestion];
+
+        document.getElementById("current-q").textContent = quizState.currentQuestion + 1;
+        document.getElementById("score").textContent = quizState.score;
+        document.getElementById("progress-bar").style.width = `${((quizState.currentQuestion + 1) / quizQuestions.length) * 100}%`;
+        document.getElementById("question-text").textContent = q.question;
+
+        document.getElementById("options-container").innerHTML = q.options
+          .map(
+            (option, index) => `
+          <button class="w-full p-4 text-right rounded-xl border-2 transition-all ${
+            selectedAnswer === index ? "border-gold bg-gold/20" : "border-darkParchment hover:border-gold hover:bg-gold/5"
+          }" onclick="selectAnswer(${index})">
+            <span class="inline-block w-8 h-8 rounded-full bg-darkParchment text-ink text-center leading-8 ml-3">${
+              String.fromCharCode(1571 + index)
+            }</span>
+            ${option}
+          </button>
+        `
+          )
+          .join("");
+
+        document.getElementById("prev-q").disabled = quizState.currentQuestion === 0;
+        document.getElementById("next-q").textContent =
+          quizState.currentQuestion === quizQuestions.length - 1 ? "إنهاء الاختبار" : "التالي →";
+      }
+
+      function selectAnswer(index) {
+        quizState.answers[quizState.currentQuestion] = index;
+        renderQuestion();
+      }
+
+      function nextQuestion() {
+        if (quizState.answers[quizState.currentQuestion] === null) {
+          showInlineMessage("الرجاء اختيار إجابة", "warning");
+          return;
+        }
+        if (quizState.currentQuestion === quizQuestions.length - 1) calculateResults();
+        else {
+          quizState.currentQuestion++;
+          renderQuestion();
+        }
+      }
+
+      function prevQuestion() {
+        if (quizState.currentQuestion > 0) {
+          quizState.currentQuestion--;
+          renderQuestion();
+        }
+      }
+
+      function calculateResults() {
+        let score = 0;
+        quizQuestions.forEach((q, index) => {
+          if (quizState.answers[index] === q.correct) score++;
+        });
+
+        quizState.score = score;
+        const percentage = (score / quizQuestions.length) * 100;
+
+        let icon, title, message;
+        if (percentage >= 90) {
+          icon = "🏆";
+          title = "ممتاز!";
+          message = "أنت خبير حقيقي في الشعر العربي! معرفتك واسعة ومدهشة.";
+        } else if (percentage >= 70) {
+          icon = "🌟";
+          title = "جيد جداً!";
+          message = "لديك معرفة جيدة بالشعر العربي. استمر في التعلم!";
+        } else if (percentage >= 50) {
+          icon = "📚";
+          title = "جيد";
+          message = "بداية جيدة! تابع استكشاف موسوعة الشعر العربي لتعزيز معرفتك.";
+        } else {
+          icon = "💪";
+          title = "حاول مرة أخرى";
+          message = "لا تيأس! استكشف الموسوعة وتعرف على المزيد عن الشعر العربي.";
+        }
+
+        document.getElementById("quiz-container").classList.add("hidden");
+        document.getElementById("quiz-result").classList.remove("hidden");
+
+        document.getElementById("result-icon").textContent = icon;
+        document.getElementById("result-title").textContent = title;
+        document.getElementById("result-score").textContent = `حصلت على ${score} من ${quizQuestions.length} (${percentage}%)`;
+        document.getElementById("result-message").textContent = message;
+      }
+
+      function retryQuiz() {
+        document.getElementById("quiz-result").classList.add("hidden");
+        document.getElementById("quiz-intro").classList.remove("hidden");
+      }
+
+      // ==================== UTILITY FUNCTIONS ====================
+      function showInlineMessage(message, type = "info") {
+        const colors = {
+          error: "bg-red-100 border-red-500 text-red-700",
+          warning: "bg-yellow-100 border-yellow-500 text-yellow-700",
+          success: "bg-green-100 border-green-500 text-green-700",
+          info: "bg-blue-100 border-blue-500 text-blue-700",
+        };
+
+        const existingToast = document.querySelector(".toast-message");
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement("div");
+        toast.className = `toast-message fixed top-20 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-xl border-2 ${colors[type]} shadow-lg z-50 animate-fadeIn`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 3000);
+      }
+
+      // ==================== INITIALIZATION ====================
+      function init() {
+        document.querySelectorAll(".nav-link, .nav-link-mobile").forEach((link) => {
+          link.addEventListener("click", () => showSection(link.dataset.section));
+        });
+
+        document.getElementById("mobile-menu-btn").addEventListener("click", () => {
+          document.getElementById("mobile-nav").classList.toggle("hidden");
+        });
+
+        document.getElementById("modal").addEventListener("click", (e) => {
+          if (e.target.id === "modal") closeModal();
+        });
+
+        document.getElementById("verse-select").addEventListener("change", (e) => analyzeVerse(e.target.value));
+
+        document.getElementById("start-theater").addEventListener("click", startTheater);
+        document.getElementById("next-verse-btn").addEventListener("click", showNextVerse);
+
+        document.getElementById("start-quiz").addEventListener("click", startQuiz);
+        document.getElementById("next-q").addEventListener("click", nextQuestion);
+        document.getElementById("prev-q").addEventListener("click", prevQuestion);
+        document.getElementById("retry-quiz").addEventListener("click", retryQuiz);
+
+        renderTimeline();
+        renderPoets();
+        renderSchools();
+        renderGrammar();
+        renderAnalyzerOptions();
+        renderTheaterOptions();
+      }
+
+      // expose modal functions for inline onclick handlers
+      window.showSection = showSection;
+      window.showEraModal = showEraModal;
+      window.showPoetModal = showPoetModal;
+      window.closeModal = closeModal;
+      window.selectAnswer = selectAnswer;
+
+      init();
+    </script>
+  </body>
 </html>
