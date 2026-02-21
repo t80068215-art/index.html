@@ -162,30 +162,31 @@
 
   <body class="h-full bg-parchment font-tajawal text-ink overflow-auto">
     <div id="app-wrapper" class="w-full h-full overflow-auto">
-      <!-- Top credit bar -->
-      <div class="bg-ink text-parchment/90 text-center py-2 text-sm md:text-base">
-        تصميم: <span class="font-bold text-gold">عمر عادل 11B</span>
+      <!-- ✅ TOP BAR: Designer credit -->
+      <div class="sticky top-0 z-50 bg-ink text-parchment/90">
+        <div class="max-w-7xl mx-auto px-4 py-2 text-sm text-center">
+          تصميم: عمر عادل 11B
+        </div>
       </div>
 
       <!-- Navigation -->
       <nav
-        class="sticky top-0 z-50 bg-gradient-to-l from-burgundy via-ink to-burgundy shadow-lg"
+        class="sticky top-[40px] md:top-[40px] z-40 bg-gradient-to-l from-burgundy via-ink to-burgundy shadow-lg"
       >
         <div class="max-w-7xl mx-auto px-4">
           <div class="flex items-center justify-between h-16">
-            <!-- Site title + logo under it -->
-            <div class="flex flex-col items-center">
+            <!-- ✅ Title + School Logo under it -->
+            <div class="flex flex-col items-start leading-tight">
               <h1
                 id="site-title"
-                class="text-xl md:text-2xl font-amiri text-gold font-bold leading-tight"
+                class="text-xl md:text-2xl font-amiri text-gold font-bold"
               >
                 مرافئ الأدب
               </h1>
-
               <img
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiV_IUSCtpvRMxWNDQDLPQsXGVmqPrqYLJHg&s"
-                alt="شعار المدرسة"
-                class="mt-1 h-8 md:h-9 w-auto object-contain drop-shadow"
+                alt="لوجو المدرسة"
+                class="mt-1 h-6 w-auto rounded-md bg-parchment/80 p-0.5 shadow"
                 loading="lazy"
               />
             </div>
@@ -250,7 +251,7 @@
                 المسرح
               </button>
 
-              <!-- Library link (PC) -->
+              <!-- ✅ Library link (PC) -->
               <a
                 href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
@@ -315,7 +316,7 @@
                 المسرح الشعري
               </button>
 
-              <!-- Library link (Mobile) -->
+              <!-- ✅ Library link (Mobile) -->
               <a
                 href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
@@ -341,8 +342,18 @@
         <!-- Home Section -->
         <section id="home" class="section-visible">
           <div class="text-center mb-12 animate-fadeIn">
+            <!-- ✅ School logo on the home/front page -->
+            <div class="flex justify-center mb-4">
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiV_IUSCtpvRMxWNDQDLPQsXGVmqPrqYLJHg&s"
+                alt="لوجو المدرسة"
+                class="h-20 w-auto rounded-2xl bg-white/70 p-2 shadow-lg"
+                loading="lazy"
+              />
+            </div>
+
             <div
-              class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-4 shadow-lg"
+              class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-6 shadow-lg"
             >
               <svg
                 class="w-20 h-20 text-gold"
@@ -355,23 +366,18 @@
               </svg>
             </div>
 
-            <!-- School logo on homepage hero -->
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiV_IUSCtpvRMxWNDQDLPQsXGVmqPrqYLJHg&s"
-              alt="شعار المدرسة"
-              class="mx-auto h-16 md:h-20 w-auto object-contain drop-shadow mb-6"
-              loading="lazy"
-            />
-
             <h2 class="text-4xl md:text-5xl font-amiri text-burgundy mb-4">
               مرحباً بك في مرافئ الأدب
             </h2>
+
+            <!-- ✅ UPDATED TEXT -->
             <p
               id="welcome-text"
               class="text-xl text-ink/80 max-w-2xl mx-auto mb-8"
             >
-              رحلة تفاعلية عبر تاريخ الشعر العربي من العصر الجاهلي إلى العصر الحديث
+              رحلة تفاعلية عبر تاريخ الشعر العربي من العصر الجاهلي إلى العصر الحديث و مكتبه تريم العتيقه
             </p>
+
             <div class="flex flex-wrap justify-center gap-4">
               <button
                 onclick="showSection('eras')"
@@ -385,6 +391,16 @@
               >
                 اختبر معلوماتك
               </button>
+
+              <!-- ✅ THIRD BUTTON (Gold/Burgundy) -->
+              <a
+                href="https://taryaamlibrary.netlify.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="px-6 py-3 bg-gradient-to-l from-burgundy to-gold text-parchment rounded-xl font-bold hover:shadow-lg transition-all hover:scale-105"
+              >
+                زيارة مكتبة تريم ↗
+              </a>
             </div>
           </div>
 
@@ -552,7 +568,10 @@
               id="theater-stage"
               class="hidden bg-gradient-to-b from-ink/5 to-ink/10 rounded-2xl p-6 min-h-[400px]"
             >
-              <div id="dialog-container" class="space-y-4 max-h-[360px] overflow-auto"></div>
+              <div
+                id="dialog-container"
+                class="space-y-4 max-h-[360px] overflow-auto"
+              ></div>
               <div class="text-center mt-6">
                 <button
                   id="next-verse-btn"
