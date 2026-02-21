@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>موسوعة الشعر العربي التفاعلية</title>
+    <title>مرافئ الأدب</title>
 
     <!-- Tailwind CDN (GitHub Pages friendly) -->
     <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -162,18 +162,33 @@
 
   <body class="h-full bg-parchment font-tajawal text-ink overflow-auto">
     <div id="app-wrapper" class="w-full h-full overflow-auto">
+      <!-- Top credit bar -->
+      <div class="bg-ink text-parchment/90 text-center py-2 text-sm md:text-base">
+        تصميم: <span class="font-bold text-gold">عمر عادل 11B</span>
+      </div>
+
       <!-- Navigation -->
       <nav
         class="sticky top-0 z-50 bg-gradient-to-l from-burgundy via-ink to-burgundy shadow-lg"
       >
         <div class="max-w-7xl mx-auto px-4">
           <div class="flex items-center justify-between h-16">
-            <h1
-              id="site-title"
-              class="text-xl md:text-2xl font-amiri text-gold font-bold"
-            >
-              موسوعة الشعر العربي
-            </h1>
+            <!-- Site title + logo under it -->
+            <div class="flex flex-col items-center">
+              <h1
+                id="site-title"
+                class="text-xl md:text-2xl font-amiri text-gold font-bold leading-tight"
+              >
+                مرافئ الأدب
+              </h1>
+
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiV_IUSCtpvRMxWNDQDLPQsXGVmqPrqYLJHg&s"
+                alt="شعار المدرسة"
+                class="mt-1 h-8 md:h-9 w-auto object-contain drop-shadow"
+                loading="lazy"
+              />
+            </div>
 
             <button id="mobile-menu-btn" class="md:hidden text-parchment p-2">
               <svg
@@ -235,7 +250,7 @@
                 المسرح
               </button>
 
-              <!-- ✅ FIXED: Library link (PC) -->
+              <!-- Library link (PC) -->
               <a
                 href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
@@ -300,7 +315,7 @@
                 المسرح الشعري
               </button>
 
-              <!-- ✅ FIXED: Library link (Mobile) -->
+              <!-- Library link (Mobile) -->
               <a
                 href="https://taryaamlibrary.netlify.app/"
                 target="_blank"
@@ -327,7 +342,7 @@
         <section id="home" class="section-visible">
           <div class="text-center mb-12 animate-fadeIn">
             <div
-              class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-6 shadow-lg"
+              class="inline-block p-6 bg-gradient-to-br from-darkParchment to-parchment rounded-full mb-4 shadow-lg"
             >
               <svg
                 class="w-20 h-20 text-gold"
@@ -339,8 +354,17 @@
                 />
               </svg>
             </div>
+
+            <!-- School logo on homepage hero -->
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiV_IUSCtpvRMxWNDQDLPQsXGVmqPrqYLJHg&s"
+              alt="شعار المدرسة"
+              class="mx-auto h-16 md:h-20 w-auto object-contain drop-shadow mb-6"
+              loading="lazy"
+            />
+
             <h2 class="text-4xl md:text-5xl font-amiri text-burgundy mb-4">
-              مرحباً بك في موسوعة الشعر العربي
+              مرحباً بك في مرافئ الأدب
             </h2>
             <p
               id="welcome-text"
@@ -632,9 +656,7 @@
       <!-- Footer -->
       <footer class="bg-ink text-parchment py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center">
-          <p class="font-amiri text-xl text-gold mb-2">
-            موسوعة الشعر العربي التفاعلية
-          </p>
+          <p class="font-amiri text-xl text-gold mb-2">مرافئ الأدب</p>
           <p class="text-parchment/70 text-sm">
             تعلم تاريخ الشعر العربي بطريقة تفاعلية وممتعة
           </p>
